@@ -1,19 +1,18 @@
 #include <lcom/lcf.h>
-
 #include <stdint.h>
 
+// Extracts the Least Significant Byte (LSB) from a 16-bit value.
 int(util_get_LSB)(uint16_t val, uint8_t *lsb) {
-  /* To be implemented by the students */
-  printf("%s is not yet implemented!\n", __func__);
-
-  return 1;
+  if(lsb == NULL) return 1; // 1 = erro
+  *lsb = 0xFF & val;
+  return 0;
 }
 
+// Extracts the Most Significant Byte (MSB) from a 16-bit value.
 int(util_get_MSB)(uint16_t val, uint8_t *msb) {
-  /* To be implemented by the students */
-  printf("%s is not yet implemented!\n", __func__);
-
-  return 1;
+  if(msb == NULL) return 1; // 1 = erro
+  *msb = (0xFF00 & val) >> 8;
+  return 0;
 }
 
 
