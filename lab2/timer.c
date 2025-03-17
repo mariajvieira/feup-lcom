@@ -16,9 +16,9 @@ int (timer_set_frequency)(uint8_t timer, uint32_t freq) {
 
   uint32_t init_val = TIMER_FREQ/freq;
 
-  uint32_t msb, lsb;
-  util_get_MSB(init_val,msb);
-  util_get_LSB(init_val,lsb);
+  uint8_t msb=0, lsb =0;
+  util_get_MSB(init_val,&msb);
+  util_get_LSB(init_val,&lsb);
 
   uint8_t timer_address;
   switch(timer) {
@@ -86,7 +86,7 @@ int (timer_display_conf)(uint8_t timer, uint8_t st,
       break;
     case tsf_initial:
       st = (st >> 4) & 0x03;
-      if (st == 1) field_data.in_mode = LBS_only;
+      if (st == 1) field_data.in_mode = LSB_only;
       else if (st == 2) field_data.in_mode = MSB_only;
       else if (st==3) field_data.in_mode = MSB_after_LSB;
       else field_data.in_mode = INVAL_val;
