@@ -38,14 +38,13 @@ int(timer_test_read_config)(uint8_t timer, enum timer_status_field field) {
   // display the configuration depending on the field
   if(timer_display_conf(timer, conf, field)!=0) return 1;
   
-  return 1;
+  return 0;
 }
 
 int(timer_test_time_base)(uint8_t timer, uint32_t freq) {
-  /* To be implemented by the students */
-  printf("%s is not yet implemented!\n", __func__);
+  if(timer_set_frequency(timer,freq)!=0) return 1;
 
-  return 1;
+  return 0;
 }
 
 int(timer_test_int)(uint8_t time) {

@@ -8,6 +8,43 @@
 int (timer_set_frequency)(uint8_t timer, uint32_t freq) {
   if(timer < 0 || timer > 2) return 1;
   if(freq < 19 || freq > TIMER_FREQ) return 1;
+
+  uint8_t control_word;
+  if(timer_get_conf(timer,&control_word)!=0) return 1;
+
+  control_word = (control_word & 0x0F) | TIMER_LSB_MSB;
+
+  uint32_t init_val = TIMER_FREQ/freq;
+
+  uint32_t msb, lsb;
+  util_get_MSB(init_val,msb);
+  util_get_LSB(init_val,lsb);
+
+  uint8_t timer_address;
+  switch(timer) {
+    case 0: 
+      control_word = control_word | TIMER_SEL0;
+      timer_address = TIMER_0;
+      break;
+    case 1:
+      control_word = control_word | TIMER_SEL1;
+      timer_address = TIMER_1;
+      break;
+    case 2:
+      control_word = control_word | TIMER_SEL2;
+      timer_address = TIMER_2;
+      break;
+    default:
+      return 1;
+  }
+
+  if(sys_outb(TIMER_CTRL,control_word)!=0) return 1;
+  if(sys_outb(timer_address,lsb)!=0) return 1;
+  if(sys_outb(timer_address,msb)!=0) return 1;
+
+  return 0;
+
+
 }
 
 int (timer_subscribe_int)(uint8_t *bit_no) {
