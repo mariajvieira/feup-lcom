@@ -30,11 +30,14 @@ int main(int argc, char *argv[]) {
 }
 
 int(timer_test_read_config)(uint8_t timer, enum timer_status_field field) {
-  /* To be implemented by the students */
-
   
-  printf("%s is not yet implemented!\n", __func__);
+  uint8_t conf;
+  // read the configuration of the timer
+  if(timer_get_conf(timer, &conf)!=0) return 1;
 
+  // display the configuration depending on the field
+  if(timer_display_conf(timer, conf, field)!=0) return 1;
+  
   return 1;
 }
 
