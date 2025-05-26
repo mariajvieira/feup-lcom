@@ -112,8 +112,8 @@ int(kbd_test_poll)() {
   uint8_t cmd_byte;
   sys_outb(STAT_REG, 0x20); 
   util_sys_inb(OUT_BUF, &cmd_byte);
-  cmd_byte |= 0x01;               // Habilitar bit de interrupção do teclado
-  sys_outb(STAT_REG, 0x60);       // Comando para escrever command byte
+  cmd_byte |= 0x01;              
+  sys_outb(STAT_REG, 0x60);    
   sys_outb(OUT_BUF, cmd_byte);
   
   kbd_print_no_sysinb(sys_inb_cnt);
@@ -153,15 +153,15 @@ int(kbd_test_timed_scan)(uint8_t n) {
             bytes[size++] = code;
             bool make = !(bytes[size-1] & BREAK_MASK);
             kbd_print_scancode(make, size, bytes);
-            
+
             if(!make && bytes[0] == ESC_BREAK_CODE) exit = true;
-            
+
             two_byte = false;
             size = 0;
             timer_counter = 0;
           }
         }
-        
+
         if(msg.m_notify.interrupts & timer_irq) {
           timer_counter++;
           if(timer_counter >= n * 60) exit = true;
@@ -170,8 +170,8 @@ int(kbd_test_timed_scan)(uint8_t n) {
     }
   }
 
-  if(kbd_unsubscribe() || timer_unsubscribe_int()) return 1;
-  
+  if(kbd_unsubscribe()!=0 || timer_unsubscribe_int()!=0) return 1;
+
   kbd_print_no_sysinb(sys_inb_cnt);
   return 0;
 }

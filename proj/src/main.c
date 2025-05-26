@@ -7,7 +7,7 @@
 static uint8_t kbd_mask;
 
 static void draw_background() {
-  vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, 0x001144);
+  vg_draw_rectangle(0, 0, 200, 200, 0x001144);
 }
 
 static void draw_menu_window() {
@@ -34,15 +34,20 @@ static void draw_menu_items() {
 }
 
 int main(int argc, char *argv[]) {
-  lcf_set_language("EN-US");
 
-  const uint16_t mode = 0x105;  
-  if (set_graphics_mode(mode))        return 1;
-  if (map_vram(mode))                 return 1;
+  uint16_t mode = 0x105; 
+  if(vbe_get_mode_info(mode, &mode_info) != OK) return 1;
 
-  draw_background();
-  draw_menu_window();
-  draw_menu_items();
+  if(map_vram(mode)) return 1;
+
+  if(set_graphics_mode(mode)) return 1;
+
+  if(vg_draw_rectangle(0, 0, 500, 500, 0x66AA)) return 1;
+
+
+  //draw_background();
+  // draw_menu_window();
+  // draw_menu_items();
 
 //   // espera ESC
 //   if (kbd_subscribe_int(&kbd_mask))   return 1;
@@ -55,7 +60,7 @@ int main(int argc, char *argv[]) {
 //         (msg.m_notify.interrupts & BIT(kbd_mask)))
 //       kbc_ih();
 //   }
-  kbd_unsubscribe();
+  //kbd_unsubscribe();
 
   vg_exit();
   return 0;
