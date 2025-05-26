@@ -6,7 +6,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include "graphics.h"  
-#include "keyboard.c"
+#include "keyboard.h"
 
 // Any header files included below this line should have been created by you
 
@@ -168,20 +168,7 @@ int (video_test_xpm)(const char *xpm[], uint16_t x, uint16_t y) {
     if (set_graphics_mode(mode)) 
         return 1;
 
-    xpm_image_t img;
-    uint8_t *pixmap = xpm_load((xpm_map_t)xpm, XPM_INDEXED, &img);
-    if (pixmap == NULL)
-        return 1;
-
-    uint16_t w = img.width;
-    uint16_t h = img.height;
-
-    for (uint16_t row = 0; row < h; row++) {
-      for (uint16_t col = 0; col < w; col++) {
-        uint32_t color = pixmap[row * w + col];
-        draw_pixel(x + col, y + row, color);
-      }
-    }
+    if (print_xpm(xpm, x, y)!=0) return 1;
 
     uint8_t kbd_bit;
     if (kbd_subscribe_int(&kbd_bit) != OK) return 1;
