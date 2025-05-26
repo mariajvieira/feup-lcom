@@ -18,6 +18,7 @@ int set_graphics_mode(uint16_t mode) {
     return 0;
 }
 
+
 int map_vram(uint16_t mode) {
     if(vbe_get_mode_info(mode, &mode_info)) return 1;
     

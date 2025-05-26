@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include "graphics.h"  // Changed from graphics.c to .h
+#include "keyboard.c"
 
 // Any header files included below this line should have been created by you
 
@@ -42,50 +43,38 @@ int (video_test_init)(uint16_t mode, uint8_t delay) {
     
     sleep(delay);
     
-    struct reg86 r;
-    memset(&r, 0, sizeof(r));
-    r.ax = 0x0003;
-    r.bx = 0x0000;
-    r.intno = 0x10;
-    if(sys_int86(&r) != OK) return 1;
+    if(vg_exit()!=0)return 1;
     
     return 0;
 }
 
 int (video_test_rectangle)(uint16_t mode, uint16_t x, uint16_t y,
                           uint16_t width, uint16_t height, uint32_t color) {
+
     if(vbe_get_mode_info(mode, &mode_info) != OK) return 1;
     
     if(map_vram(mode)) return 1;
 
-    struct reg86 r;
-    memset(&r, 0, sizeof(r));
-    r.ax = 0x4F02;
-    r.bx = mode | BIT(14);  
-    r.intno = 0x10;
-    if(sys_int86(&r) != OK) return 1;
+    if(set_graphics_mode(mode)) return 1;
 
-    for(uint16_t i = x; i < x + width; i++) {
-        for(uint16_t j = y; j < y + height; j++) {
-            draw_pixel(i, j, color);
-        }
-    }
+    if(vg_draw_rectangle(x, y, width, height, color)) return 1;
+
+    sleep(5);
     
-    uint8_t scancode = 0;
+    // Modificar condição de saída
     int ipc_status;
     message msg;
-    int r_kbd;
+    uint8_t r_kbd;
     
     if (kbd_subscribe_int(&r_kbd) != OK) return 1;
     
-    while(scancode != 0x81) {
+    while(scancode != ESC_BREAK_CODE) {  // Usar variável global
         if (driver_receive(ANY, &msg, &ipc_status) != 0) continue;
         if (is_ipc_notify(ipc_status)) {
             switch (_ENDPOINT_P(msg.m_source)) {
                 case HARDWARE:
                     if (msg.m_notify.interrupts & BIT(r_kbd)) {
-                        kbc_ih();
-                        scancode = get_scancode();
+                        kbc_ih();  // Atualiza scancode global
                     }
                     break;
                 default:
@@ -94,12 +83,8 @@ int (video_test_rectangle)(uint16_t mode, uint16_t x, uint16_t y,
         }
     }
     
-    if (kbd_unsubscribe_int() != OK) return 1;
-    
-    memset(&r, 0, sizeof(r));
-    r.ax = 0x0003;
-    r.intno = 0x10;
-    if(sys_int86(&r) != OK) return 1;
+    if (kbd_unsubscribe() != OK) return 1;
+    if(vg_exit()!=0)return 1;
     
     return 0;
 }
@@ -131,16 +116,9 @@ int(video_test_pattern)(uint16_t mode, uint8_t no_rectangles, uint32_t first, ui
             color += step;
         }
     }
+
     
-    sleep(5); 
-    
-    struct reg86 r;
-    memset(&r, 0, sizeof(r));
-    r.ax = 0x0003;
-    r.bx = 0x0000;
-    r.intno = 0x10;
-    if(sys_int86(&r) != OK) return 1;
-    
+    if(vg_exit()!=0)return 1;    
     return 0;
 }
 
