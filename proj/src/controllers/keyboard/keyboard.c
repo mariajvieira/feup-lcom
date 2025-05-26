@@ -1,7 +1,7 @@
 #include <lcom/lcf.h>
-#include <lcom/lab3.h>
 
 #include "i8042.h"
+#include "keyboard.h"
 
 uint8_t scancode=0;
 int kbd_hook_id=1;
