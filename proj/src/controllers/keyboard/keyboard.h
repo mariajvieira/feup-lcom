@@ -5,7 +5,6 @@
 
 #include "i8042.h"
 
-
 void     kbc_ih();
 int      kbd_subscribe_int(uint8_t *bit_no);
 int      kbd_unsubscribe();

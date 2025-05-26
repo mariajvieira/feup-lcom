@@ -6,7 +6,6 @@
 
 static uint8_t kbd_mask;
 
-
 static void draw_background() {
   vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, 0x001144);
 }
@@ -30,15 +29,14 @@ static void draw_menu_items() {
   for (int i = 0; i < 3; i++) {
     uint16_t y = y0 + i*(h + 20);
     vg_draw_rectangle(x, y, w, h, 0x888888);
-    // aqui poderias chamar uma rotina de texto, se a tiveres:
-    //draw_text(labels[i], x+10, y+10, 0x000000);
+
   }
 }
 
 int main(int argc, char *argv[]) {
   lcf_set_language("EN-US");
 
-  const uint16_t mode = 0x105;  // ex: 1024x768
+  const uint16_t mode = 0x105;  
   if (set_graphics_mode(mode))        return 1;
   if (map_vram(mode))                 return 1;
 
