@@ -1,8 +1,6 @@
 // IMPORTANT: you must include the following line in all your C files
 #include <lcom/lcf.h>
 #include <lcom/lab5.h>
-#include <lcom/libxpm.h>
-
 #include <stdint.h>
 #include <stdio.h>
 #include "graphics.h"  
@@ -159,7 +157,7 @@ int(video_test_pattern)(uint16_t mode, uint8_t no_rectangles, uint32_t first, ui
 }
 
 
-int (video_test_xpm)(const char *xpm[], uint16_t x, uint16_t y) {
+int (video_test_xpm)(xpm_map_t xpm, uint16_t x, uint16_t y) {
     uint16_t mode = 0x105;
     if (vbe_get_mode_info(mode, &mode_info) != OK) 
         return 1;
@@ -167,8 +165,8 @@ int (video_test_xpm)(const char *xpm[], uint16_t x, uint16_t y) {
         return 1;
     if (set_graphics_mode(mode)) 
         return 1;
-
     if (print_xpm(xpm, x, y)!=0) return 1;
+    sleep(5);
 
     uint8_t kbd_bit;
     if (kbd_subscribe_int(&kbd_bit) != OK) return 1;
