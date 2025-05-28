@@ -42,6 +42,8 @@ static void draw_game(void) {
     for (int i = 0; i < snake_len; i++)
         vg_draw_rectangle(snake_x[i], snake_y[i], CELL_SIZE, CELL_SIZE, 0x00FF00);
     vg_draw_rectangle(food_x, food_y, CELL_SIZE, CELL_SIZE, 0xFF0000);
+
+    vg_draw_rectangle(5, 20, CELL_SIZE, CELL_SIZE, 0xFF0000);
 }
 
 
@@ -81,49 +83,38 @@ void game_start(void) {
     spawn_food();
     running = true;
 
-   //uint8_t kbd_bit_no;
-  // uint8_t timer_bit_no;
-//    if (kbd_subscribe_int(&kbd_bit_no) != OK) {
-//        vg_exit();
-//        return;
-//    }
-   //int kbd_irq = BIT(kbd_bit_no);
 
-    //    if (timer_subscribe_int(&timer_bit_no) != 0) {
-    //    kbd_unsubscribe();
-    //     vg_exit();
-    //     return;
-    // }
-    //int timer_irq = BIT(timer_bit_no);
+    // handle_key(0); 
+    // update_game();
+    // draw_game();
 
-    handle_key(0); // Initialize direction to avoid garbage values
-    update_game();
-    draw_game();
-    // message msg;
-    // int ipc_status;
-    // while (running) {
-    //     if (driver_receive(ANY, &msg, &ipc_status) != 0)
-    //         continue;
-    //     if (is_ipc_notify(ipc_status)) {
-    //         switch (_ENDPOINT_P(msg.m_source)) {
-    //             case HARDWARE:
-    //                 if (msg.m_notify.interrupts ) {
-    //                     kbc_ih();               
-    //                     handle_key(scancode); 
-    //                 }
-    //                 if (msg.m_notify.interrupts  & timer_irq) {
-    //                     update_game();         
-    //                     draw_game();          
-    //                 }
-    //                 break;
-    //             default:
-    //                 break;
-    //         }
-    //     }
-    // }
 
-   // timer_unsubscribe_int();
-    //kbd_unsubscribe();
+    // ---------------------- //
+
+    message msg;
+    int ipc_status;
+    while (running) {
+        if (driver_receive(ANY, &msg, &ipc_status) != 0)
+            continue;
+        if (is_ipc_notify(ipc_status)) {
+            switch (_ENDPOINT_P(msg.m_source)) {
+                case HARDWARE:
+                    if (msg.m_notify.interrupts) { 
+                        kbc_ih();               
+                        handle_key(scancode); 
+                        update_game();         
+                        draw_game();          
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    // -------------------//
+
+
     sleep(5);
     vg_exit();
     menu_set_active(true);

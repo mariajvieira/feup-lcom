@@ -60,31 +60,6 @@ int (proj_main_loop)(int argc, char *argv[]) {
             if (!(scancode & 0x80)) {
                 if (menu_is_active()) {
                     menu_handle_key(scancode);
-                    
-                    if (scancode == ENTER_KEY || scancode == SPACE_KEY) {
-                        switch (menu_get_selected()) {
-                            case MENU_START_GAME:
-                                menu_set_active(false);
-                                game_start();
-                                printf("Starting Snake Game...\n");
-                                break;
-                                
-                            case MENU_HIGH_SCORES:
-                                printf("Showing High Scores...\n");
-                                break;
-                                
-                            case MENU_OPTIONS:
-                                printf("Showing Options...\n");
-                                break;
-                                
-                            case MENU_EXIT:
-                                running = false;
-                                break;
-                                
-                            case MENU_ITEMS_COUNT:
-                                break;
-                        }
-                    }
                 }
             }
         }
