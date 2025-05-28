@@ -5,6 +5,7 @@
 #include "controllers/keyboard/keyboard.h"
 #include "controllers/keyboard/i8042.h"
 #include "controllers/menu/menu.h"
+#include "game/game.h"
 
 static uint8_t kbd_mask;
 extern uint8_t scancode;
@@ -64,6 +65,7 @@ int (proj_main_loop)(int argc, char *argv[]) {
                         switch (menu_get_selected()) {
                             case MENU_START_GAME:
                                 menu_set_active(false);
+                                game_start();
                                 printf("Starting Snake Game...\n");
                                 break;
                                 

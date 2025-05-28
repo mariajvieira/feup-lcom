@@ -1,6 +1,7 @@
 #include "menu.h"
 #include "../video/graphics.h"
 #include "../keyboard/i8042.h"
+#include "../../game/game.c"
 #include <string.h>
 
 static menu_state_t menu_state;
@@ -105,15 +106,13 @@ void menu_handle_key(uint8_t scancode) {
         return;
     
     switch (scancode) {
-        case W_KEY: 
         case ARROW_UP:
             if (menu_state.selected_item > 0)
                 menu_state.selected_item--;
             else
                 menu_state.selected_item = MENU_ITEMS_COUNT - 1;
             break;
-            
-        case S_KEY:   
+             
         case ARROW_DOWN:
             if (menu_state.selected_item < MENU_ITEMS_COUNT - 1)
                 menu_state.selected_item++;
@@ -121,8 +120,12 @@ void menu_handle_key(uint8_t scancode) {
                 menu_state.selected_item = 0;
             break;
             
-        case ENTER_KEY:
-        case SPACE_KEY:
+        case (ENTER_KEY):
+                if (menu_state.selected_item == MENU_START_GAME) {
+                menu_set_active(false);   
+                printf("START GAME SELECTED\n");
+                game_start();            
+            }
             break;
     }
 }
