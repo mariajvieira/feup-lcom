@@ -3,65 +3,92 @@
 #include <stdio.h>
 #include "controllers/video/graphics.h"
 #include "controllers/keyboard/keyboard.h"
+#include "controllers/keyboard/i8042.h"
+#include "controllers/menu/menu.h"
 
 static uint8_t kbd_mask;
-
-static void draw_background() {
-  vg_draw_rectangle(0, 0, 200, 200, 0x001144);
-}
-
-static void draw_menu_window() {
-  uint16_t w = mode_info.XResolution / 2;
-  uint16_t h = mode_info.YResolution / 2;
-  uint16_t x = (mode_info.XResolution - w) / 2;
-  uint16_t y = (mode_info.YResolution - h) / 2;
-  vg_draw_rectangle(x+5, y+5, w, h, 0x000000);
-  vg_draw_rectangle(x, y, w, h, 0xCCCCCC);
-}
-
-static void draw_menu_items() {
-  //const char *labels[3] = { "Start Game", "Options", "Exit" };
-  uint16_t w = mode_info.XResolution / 2 - 40;
-  uint16_t h = 40;
-  uint16_t x = (mode_info.XResolution - (mode_info.XResolution/2)) / 2 + 20;
-  uint16_t y0 = (mode_info.YResolution - (mode_info.YResolution/2)) / 2 + 20;
-
-  for (int i = 0; i < 3; i++) {
-    uint16_t y = y0 + i*(h + 20);
-    vg_draw_rectangle(x, y, w, h, 0x888888);
-
-  }
-}
+extern uint8_t scancode;
 
 int main(int argc, char *argv[]) {
+  // sets the language of LCF messages (can be either EN-US or PT-PT)
+  lcf_set_language("EN-US");
 
-  uint16_t mode = 0x105; 
-  if(vbe_get_mode_info(mode, &mode_info) != OK) return 1;
+  // enables to log function invocations that are being "wrapped" by LCF
+  lcf_trace_calls("/home/lcom/labs/proj/trace.txt");
 
-  if(map_vram(mode)) return 1;
+  // enables to save the output of printf function calls on a file
+  lcf_log_output("/home/lcom/labs/proj/output.txt");
 
-  if(set_graphics_mode(mode)) return 1;
+  // handles control over to LCF
+  // [LCF handles command line arguments and invokes the right function]
+  if (lcf_start(argc, argv))
+    return 1;
 
-  if(vg_draw_rectangle(0, 0, 500, 500, 0x66AA)) return 1;
-
-
-  //draw_background();
-  // draw_menu_window();
-  // draw_menu_items();
-
-//   // espera ESC
-//   if (kbd_subscribe_int(&kbd_mask))   return 1;
-//   message msg;
-//   int ipc_status;
-//   while (scancode != ESC_BREAK_CODE) {
-//     if (driver_receive(ANY, &msg, &ipc_status) != OK) continue;
-//     if (is_ipc_notify(ipc_status) &&
-//         _ENDPOINT_P(msg.m_source) == HARDWARE &&
-//         (msg.m_notify.interrupts & BIT(kbd_mask)))
-//       kbc_ih();
-//   }
-  //kbd_unsubscribe();
-
-  vg_exit();
+  // LCF clean up tasks
+  lcf_cleanup();
   return 0;
+}
+
+int (proj_main_loop)(int argc, char *argv[]) {
+    uint16_t mode = 0x117;  
+    if(vbe_get_mode_info(mode, &mode_info) != OK) return 1;
+    if(map_vram(mode)) return 1;
+    if(set_graphics_mode(mode)) return 1;
+
+    if(menu_init()) return 1;
+
+    if (kbd_subscribe_int(&kbd_mask)) return 1;
+    
+    message msg;
+    int ipc_status;
+    bool running = true;
+    
+    while (running && scancode != ESC_BREAK_CODE) {
+        if (menu_is_active()) {
+            menu_draw();
+        }
+        
+        if (driver_receive(ANY, &msg, &ipc_status) != OK) continue;
+        
+        if (is_ipc_notify(ipc_status) &&
+            _ENDPOINT_P(msg.m_source) == HARDWARE &&
+            (msg.m_notify.interrupts & BIT(kbd_mask))) {
+            
+            kbc_ih();
+            
+            if (!(scancode & 0x80)) {
+                if (menu_is_active()) {
+                    menu_handle_key(scancode);
+                    
+                    if (scancode == ENTER_KEY || scancode == SPACE_KEY) {
+                        switch (menu_get_selected()) {
+                            case MENU_START_GAME:
+                                menu_set_active(false);
+                                printf("Starting Snake Game...\n");
+                                break;
+                                
+                            case MENU_HIGH_SCORES:
+                                printf("Showing High Scores...\n");
+                                break;
+                                
+                            case MENU_OPTIONS:
+                                printf("Showing Options...\n");
+                                break;
+                                
+                            case MENU_EXIT:
+                                running = false;
+                                break;
+                                
+                            case MENU_ITEMS_COUNT:
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    kbd_unsubscribe();
+    vg_exit();
+    return 0;
 }

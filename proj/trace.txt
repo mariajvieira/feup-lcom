@@ -1,0 +1,2261 @@
+@lcflib.a:2019, lcf_start
+  proj_main_loop(argc, argv)
+> proj_main_loop(0, [NULL])
+  @main.c:34, proj_main_loop
+    vbe_get_mode_info(mode, &mode_info)
+  > vbe_get_mode_info(0x117, addr: 0x824a5f0)
+  < vbe_get_mode_info(0x117, addr: 0x824a5f0 [0xe0000000, 1024x768, 5:6:5 (16) <1.6 MiB>]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/video/graphics.c:27, map_vram
+    sys_privctl(SELF, SYS_PRIV_ADD_MEM, &mr)
+  > sys_privctl(SELF, SYS_PRIV_ADD_MEM, addr: 0x822e838 [0xe0000000 - 0xe0180000 <1.6 MiB>])
+  < sys_privctl(SELF, SYS_PRIV_ADD_MEM, &mr) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/video/graphics.c:29, map_vram
+    vm_map_phys(SELF, (void*)mr.mr_base, mr.mr_limit - mr.mr_base)
+  < vm_map_phys(SELF, addr: 0xe0000000, 1.6 MiB) -> (ret: 0xef87b000)
+  @/home/lcom/labs/proj/src/controllers/video/graphics.c:16, set_graphics_mode
+    sys_int86(&r)
+  > sys_int86(addr: 0xeffff700 [AX: 4f02, BX: 4117, CX: 0000, DX: 0000, ES: 0000, DI: 0000])
+  < sys_int86(addr: 0xeffff700 [AX: 004f, BX: 4117, CX: 0000, DX: 0000, ES: 0000, DI: 0000]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/keyboard/keyboard.c:22, kbd_subscribe_int
+    sys_irqsetpolicy(KBD_IRQ, IRQ_REENABLE | IRQ_EXCLUSIVE, &kbd_hook_id)
+  > sys_irqsetpolicy(1, 3, addr: 0x822dbac [0])
+  < sys_irqsetpolicy(1, 3, addr: 0x822dbac [10]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 332, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 332, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000001]>)
+  @main.c:61, proj_main_loop
+    kbc_ih()
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x64, addr: 0xeffff684)
+    < sys_inb(0x64, addr: 0xeffff684 [0x1d = 0b00011101])
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x60, addr: 0xeffff684)
+    < sys_inb(0x60, addr: 0xeffff684 [0xe0 = 0b11100000])
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 332, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 332, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000001]>)
+  @main.c:61, proj_main_loop
+    kbc_ih()
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x64, addr: 0xeffff684)
+    < sys_inb(0x64, addr: 0xeffff684 [0x1d = 0b00011101])
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x60, addr: 0xeffff684)
+    < sys_inb(0x60, addr: 0xeffff684 [0x50 = 0b01010000])
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 392, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 392, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000001]>)
+  @main.c:61, proj_main_loop
+    kbc_ih()
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x64, addr: 0xeffff684)
+    < sys_inb(0x64, addr: 0xeffff684 [0x1d = 0b00011101])
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x60, addr: 0xeffff684)
+    < sys_inb(0x60, addr: 0xeffff684 [0xe0 = 0b11100000])
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 392, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 392, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000001]>)
+  @main.c:61, proj_main_loop
+    kbc_ih()
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x64, addr: 0xeffff684)
+    < sys_inb(0x64, addr: 0xeffff684 [0x1d = 0b00011101])
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x60, addr: 0xeffff684)
+    < sys_inb(0x60, addr: 0xeffff684 [0xd0 = 0b11010000])
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 392, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 392, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000001]>)
+  @main.c:61, proj_main_loop
+    kbc_ih()
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x64, addr: 0xeffff684)
+    < sys_inb(0x64, addr: 0xeffff684 [0x1d = 0b00011101])
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x60, addr: 0xeffff684)
+    < sys_inb(0x60, addr: 0xeffff684 [0xe0 = 0b11100000])
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 392, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 392, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000001]>)
+  @main.c:61, proj_main_loop
+    kbc_ih()
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x64, addr: 0xeffff684)
+    < sys_inb(0x64, addr: 0xeffff684 [0x1d = 0b00011101])
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x60, addr: 0xeffff684)
+    < sys_inb(0x60, addr: 0xeffff684 [0x50 = 0b01010000])
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 452, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 452, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000001]>)
+  @main.c:61, proj_main_loop
+    kbc_ih()
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x64, addr: 0xeffff684)
+    < sys_inb(0x64, addr: 0xeffff684 [0x1d = 0b00011101])
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x60, addr: 0xeffff684)
+    < sys_inb(0x60, addr: 0xeffff684 [0xe0 = 0b11100000])
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 452, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 452, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000001]>)
+  @main.c:61, proj_main_loop
+    kbc_ih()
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x64, addr: 0xeffff684)
+    < sys_inb(0x64, addr: 0xeffff684 [0x1d = 0b00011101])
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x60, addr: 0xeffff684)
+    < sys_inb(0x60, addr: 0xeffff684 [0xd0 = 0b11010000])
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 452, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 452, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000001]>)
+  @main.c:61, proj_main_loop
+    kbc_ih()
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x64, addr: 0xeffff684)
+    < sys_inb(0x64, addr: 0xeffff684 [0x1d = 0b00011101])
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x60, addr: 0xeffff684)
+    < sys_inb(0x60, addr: 0xeffff684 [0xe0 = 0b11100000])
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 452, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 452, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000001]>)
+  @main.c:61, proj_main_loop
+    kbc_ih()
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x64, addr: 0xeffff684)
+    < sys_inb(0x64, addr: 0xeffff684 [0x1d = 0b00011101])
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x60, addr: 0xeffff684)
+    < sys_inb(0x60, addr: 0xeffff684 [0x48 = 0b01001000])
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 392, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 392, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000001]>)
+  @main.c:61, proj_main_loop
+    kbc_ih()
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x64, addr: 0xeffff684)
+    < sys_inb(0x64, addr: 0xeffff684 [0x1d = 0b00011101])
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x60, addr: 0xeffff684)
+    < sys_inb(0x60, addr: 0xeffff684 [0xe0 = 0b11100000])
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 392, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 392, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000001]>)
+  @main.c:61, proj_main_loop
+    kbc_ih()
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x64, addr: 0xeffff684)
+    < sys_inb(0x64, addr: 0xeffff684 [0x1d = 0b00011101])
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x60, addr: 0xeffff684)
+    < sys_inb(0x60, addr: 0xeffff684 [0x50 = 0b01010000])
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 452, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 452, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000001]>)
+  @main.c:61, proj_main_loop
+    kbc_ih()
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x64, addr: 0xeffff684)
+    < sys_inb(0x64, addr: 0xeffff684 [0x1d = 0b00011101])
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x60, addr: 0xeffff684)
+    < sys_inb(0x60, addr: 0xeffff684 [0xe0 = 0b11100000])
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 452, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 452, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000001]>)
+  @main.c:61, proj_main_loop
+    kbc_ih()
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x64, addr: 0xeffff684)
+    < sys_inb(0x64, addr: 0xeffff684 [0x1d = 0b00011101])
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x60, addr: 0xeffff684)
+    < sys_inb(0x60, addr: 0xeffff684 [0xd0 = 0b11010000])
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 452, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 452, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000001]>)
+  @main.c:61, proj_main_loop
+    kbc_ih()
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x64, addr: 0xeffff684)
+    < sys_inb(0x64, addr: 0xeffff684 [0x1d = 0b00011101])
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x60, addr: 0xeffff684)
+    < sys_inb(0x60, addr: 0xeffff684 [0xe0 = 0b11100000])
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 452, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 452, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000001]>)
+  @main.c:61, proj_main_loop
+    kbc_ih()
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x64, addr: 0xeffff684)
+    < sys_inb(0x64, addr: 0xeffff684 [0x1d = 0b00011101])
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x60, addr: 0xeffff684)
+    < sys_inb(0x60, addr: 0xeffff684 [0xc8 = 0b11001000])
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 452, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 452, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000001]>)
+  @main.c:61, proj_main_loop
+    kbc_ih()
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x64, addr: 0xeffff684)
+    < sys_inb(0x64, addr: 0xeffff684 [0x1d = 0b00011101])
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x60, addr: 0xeffff684)
+    < sys_inb(0x60, addr: 0xeffff684 [0xe0 = 0b11100000])
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 452, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 452, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000001]>)
+  @main.c:61, proj_main_loop
+    kbc_ih()
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x64, addr: 0xeffff684)
+    < sys_inb(0x64, addr: 0xeffff684 [0x1d = 0b00011101])
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x60, addr: 0xeffff684)
+    < sys_inb(0x60, addr: 0xeffff684 [0x48 = 0b01001000])
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 392, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 392, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000001]>)
+  @main.c:61, proj_main_loop
+    kbc_ih()
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x64, addr: 0xeffff684)
+    < sys_inb(0x64, addr: 0xeffff684 [0x1d = 0b00011101])
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x60, addr: 0xeffff684)
+    < sys_inb(0x60, addr: 0xeffff684 [0xe0 = 0b11100000])
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 392, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 392, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000001]>)
+  @main.c:61, proj_main_loop
+    kbc_ih()
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x64, addr: 0xeffff684)
+    < sys_inb(0x64, addr: 0xeffff684 [0x1d = 0b00011101])
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x60, addr: 0xeffff684)
+    < sys_inb(0x60, addr: 0xeffff684 [0xc8 = 0b11001000])
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 392, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 392, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000001]>)
+  @main.c:61, proj_main_loop
+    kbc_ih()
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x64, addr: 0xeffff684)
+    < sys_inb(0x64, addr: 0xeffff684 [0x1d = 0b00011101])
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x60, addr: 0xeffff684)
+    < sys_inb(0x60, addr: 0xeffff684 [0xe0 = 0b11100000])
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 392, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 392, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000001]>)
+  @main.c:61, proj_main_loop
+    kbc_ih()
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x64, addr: 0xeffff684)
+    < sys_inb(0x64, addr: 0xeffff684 [0x1d = 0b00011101])
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x60, addr: 0xeffff684)
+    < sys_inb(0x60, addr: 0xeffff684 [0x48 = 0b01001000])
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 332, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 332, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000001]>)
+  @main.c:61, proj_main_loop
+    kbc_ih()
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x64, addr: 0xeffff684)
+    < sys_inb(0x64, addr: 0xeffff684 [0x1d = 0b00011101])
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x60, addr: 0xeffff684)
+    < sys_inb(0x60, addr: 0xeffff684 [0xe0 = 0b11100000])
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 332, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 332, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000001]>)
+  @main.c:61, proj_main_loop
+    kbc_ih()
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x64, addr: 0xeffff684)
+    < sys_inb(0x64, addr: 0xeffff684 [0x1d = 0b00011101])
+    @/home/lcom/labs/proj/src/controllers//utils.c:27, util_sys_inb
+      sys_inb(port, &val)
+    > sys_inb(0x60, addr: 0xeffff684)
+    < sys_inb(0x60, addr: 0xeffff684 [0xc8 = 0b11001000])
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:31, draw_background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR)
+  > vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128])
+  < vg_draw_rectangle(0, 0, 1024, 768, 0x00000080 [128]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:37, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0])
+  < vg_draw_rectangle(261, 197, 512, 384, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:42, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, menu_state.window_h, MENU_WINDOW_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(256, 192, 512, 384, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:47, draw_menu_window
+    vg_draw_rectangle(menu_state.window_x, menu_state.window_y, menu_state.window_w, 3, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0])
+  < vg_draw_rectangle(256, 192, 512, 3, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:59, draw_title
+    vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR)
+  > vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(306, 222, 412, 40, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 312, 432, 50, 0x00ff0000 [16711680])
+  < vg_draw_rectangle(296, 312, 432, 50, 0x00ff0000 [16711680]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 312, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 312, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 360, 432, 2, 0x00ffffff [16777215])
+  < vg_draw_rectangle(296, 360, 432, 2, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:86, draw_menu_items
+    vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT)
+  > vg_draw_rectangle(306, 332, 15, 10, 0x00ffffff [16777215])
+  < vg_draw_rectangle(306, 332, 15, 10, 0x00ffffff [16777215]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 372, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 372, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 420, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 432, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 432, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 480, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:74, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, item_height, bg_color)
+  > vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256])
+  < vg_draw_rectangle(296, 492, 432, 50, 0x00c0c0c0 [12632256]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:78, draw_menu_items
+    vg_draw_rectangle(start_x, item_y, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 492, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:80, draw_menu_items
+    vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color)
+  > vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0])
+  < vg_draw_rectangle(296, 540, 432, 2, 0x00000000 [0]) -> (ret: 0)
+  @/home/lcom/labs/proj/src/controllers/menu/menu.c:99, draw_instructions
+    vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 20, MENU_BORDER_COLOR)
+  > vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0])
+  < vg_draw_rectangle(276, 526, 472, 20, 0x00000000 [0]) -> (ret: 0)
+  @main.c:55, proj_main_loop
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff760, addr: 0xeffff75c)

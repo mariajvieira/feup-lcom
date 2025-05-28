@@ -1,10 +1,10 @@
 #include <lcom/lcf.h>
-
+#include "keyboard.h"
 #include "i8042.h"
 
 
-uint8_t scancode=0;
-int kbd_hook_id=1;
+uint8_t scancode = 0;
+int kbd_hook_id = 1;
 
 
 void (kbc_ih)() {

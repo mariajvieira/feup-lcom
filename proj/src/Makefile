@@ -5,9 +5,10 @@ PROG=proj
 .PATH: ${.CURDIR}/controllers/keyboard
 .PATH: ${.CURDIR}/controllers/timer
 .PATH: ${.CURDIR}/controllers/video
+.PATH: ${.CURDIR}/controllers/menu
 
 # source code files to be compiled
-SRCS = main.c timer.c utils.c keyboard.c graphics.c
+SRCS = main.c timer.c utils.c keyboard.c graphics.c menu.c
 
 # additional compilation flags
 # "-Wall -Wextra -Werror -I . -std=c11 -Wno-unused-parameter" are already set

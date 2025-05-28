@@ -1,12 +1,12 @@
-#ifndef LAB3_KEYBOARD_H
-#define LAB3_KEYBOARD_H
+#ifndef KEYBOARD_H
+#define KEYBOARD_H
 
 #include <stdint.h>
 
-#include "i8042.h"
+extern uint8_t scancode;
 
-void     kbc_ih();
-int      kbd_subscribe_int(uint8_t *bit_no);
-int      kbd_unsubscribe();
+void (kbc_ih)();
+int kbd_subscribe_int(uint8_t *bit_no);
+int kbd_unsubscribe();
 
-#endif /* LAB3_KEYBOARD_H */
+#endif /* KEYBOARD_H */
