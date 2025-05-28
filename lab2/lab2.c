@@ -56,7 +56,7 @@ int(timer_test_int)(uint8_t time) {
   uint32_t irq_set = BIT(bit_no);
 
   if (timer_subscribe_int(&bit_no) != 0) return 1;
-  if (timer_set_frequency(0, 60) != 0) return 1;  // Use Timer 0 explicitly
+  if (timer_set_frequency(0, 60) != 0) return 1;  
 
   message m;
   int ipc_status;

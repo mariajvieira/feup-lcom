@@ -8,6 +8,7 @@
 #include "game/game.h"
 
 static uint8_t kbd_mask;
+static uint8_t timer_mask; 
 extern uint8_t scancode;
 
 int main(int argc, char *argv[]) {
@@ -38,34 +39,50 @@ int (proj_main_loop)(int argc, char *argv[]) {
 
     if(menu_init()) return 1;
 
-    if (kbd_subscribe_int(&kbd_mask)) return 1;
+    if (kbd_subscribe_int(&kbd_mask)!=0) return 1;
+    //if (timer_subscribe_int(&timer_mask)!=0) return 1;
     
     message msg;
     int ipc_status;
     bool running = true;
+    if (timer_set_frequency(0, 60) != 0) return 1; 
+
+    int timer_ticks = 0;
+
     
     while (running && scancode != ESC_BREAK_CODE) {
         if (menu_is_active()) {
             menu_draw();
-        }
+        } 
         
         if (driver_receive(ANY, &msg, &ipc_status) != OK) continue;
         
         if (is_ipc_notify(ipc_status) &&
-            _ENDPOINT_P(msg.m_source) == HARDWARE &&
-            (msg.m_notify.interrupts & BIT(kbd_mask))) {
-            
-            kbc_ih();
-            
-            if (!(scancode & 0x80)) {
-                if (menu_is_active()) {
-                    menu_handle_key(scancode);
+            _ENDPOINT_P(msg.m_source) == HARDWARE) {
+
+            if (msg.m_notify.interrupts & BIT(kbd_mask)) {
+                kbc_ih();
+                if (!(scancode & 0x80)) {
+                    if (menu_is_active()) {
+                        menu_handle_key(scancode);
+                    } else {
+                        handle_key(scancode);
+                    }
+                }
+            }
+            if (!menu_is_active() && (msg.m_notify.interrupts & BIT(timer_mask))) {
+                timer_ticks++;
+                if (timer_ticks >= 2) { // 30 ticks = 0,5s se timer a 60Hz
+                    update_game();
+                    draw_game();
+                    timer_ticks = 0;
                 }
             }
         }
     }
     
     kbd_unsubscribe();
+    timer_unsubscribe_int();
     vg_exit();
     return 0;
 }

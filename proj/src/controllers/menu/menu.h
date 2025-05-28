@@ -1,6 +1,6 @@
 #ifndef MENU_H
 #define MENU_H
-
+#include <lcom/lcf.h>
 #include <stdint.h>
 #include <stdbool.h>
 
