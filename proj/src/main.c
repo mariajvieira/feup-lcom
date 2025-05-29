@@ -84,6 +84,7 @@ int (proj_main_loop)(int argc, char *argv[]) {
                 if (timer_ticks >= 6) { 
                     update_game();
                     draw_game();
+                    draw_score();
                     timer_ticks = 0;
                 }
             }

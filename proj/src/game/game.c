@@ -44,7 +44,6 @@ static void spawn_food(void) {
 
 void draw_game(void) {
     vg_draw_rectangle(0,0, mode_info.XResolution, mode_info.YResolution, 0xdddddA); 
-    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, 0x000000); 
 
     vg_draw_rectangle(food_x, food_y, CELL_SIZE, CELL_SIZE, 0xFFFA00);
 
@@ -125,45 +124,5 @@ void draw_game_over(void) {
 
     menu_set_active(true);
 
-    // handle_key(0); 
-    // update_game();
-    // draw_game();
-
-
-    // ---------------------- //
-
-    // message msg;
-    // int ipc_status;
-    // extern int hook_id;
-    // extern int kbd_hook_id; 
-    
-
-    // while (running) {
-    //     if (driver_receive(ANY, &msg, &ipc_status) != 0)
-    //         continue;
-    //     if (is_ipc_notify(ipc_status)) {
-    //         switch (_ENDPOINT_P(msg.m_source)) {
-    //             case HARDWARE:
-    //                 if (msg.m_notify.interrupts & hook_id) {
-    //                     update_game();
-    //                     draw_game();
-    //                 }
-    //                 if (msg.m_notify.interrupts & kbd_hook_id) {
-    //                     kbc_ih();
-    //                     handle_key(scancode);
-    //                 }
-    //                 break;
-    //             default:
-    //                 break;
-    //         }
-    //     }
-    // }
-
-    // -------------------//
-
-
-    // sleep(5);
-    // vg_exit();
-    // menu_set_active(true);
     printf("START GAME SELECTED\n");
 }
