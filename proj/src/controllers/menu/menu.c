@@ -2,6 +2,7 @@
 #include "../video/graphics.h"
 #include "../keyboard/i8042.h"
 #include "../../game/game.c"
+#include "../../xpm/start.xpm"
 #include <string.h>
 
 static menu_state_t menu_state;
@@ -54,6 +55,8 @@ static int draw_title() {
 }
 
 static int draw_menu_items() {
+    int err=0;
+    uint16_t item_x = menu_state.window_x + 50;
     uint16_t item_height = 50;
     uint16_t item_width = menu_state.window_w - 80;
     uint16_t start_x = menu_state.window_x + 40;
@@ -72,10 +75,14 @@ static int draw_menu_items() {
         if (vg_draw_rectangle(start_x, item_y + item_height - 2, item_width, 2, border_color))
             return 1;
         
-        if (i == menu_state.selected_item) {
-            if (vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT))
-                return 1;
+        if (i == 0) {
+            err |= print_xpm((const char **)start, item_x - 50, item_y + i * item_height);
         }
+
+        // if (i == menu_state.selected_item) {
+        //     if (vg_draw_rectangle(start_x + 10, item_y + 20, 15, 10, MENU_SELECTED_TEXT))
+        //         return 1;
+        // }
     }
     
     return 0;
