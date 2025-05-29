@@ -39,13 +39,22 @@ int (proj_main_loop)(int argc, char *argv[]) {
 
     if(menu_init()) return 1;
 
-    if (kbd_subscribe_int(&kbd_mask)!=0) return 1;
-    //if (timer_subscribe_int(&timer_mask)!=0) return 1;
+    uint8_t bit_no_kbd = 1;
+
+    if (kbd_subscribe_int(&bit_no_kbd) != 0)
+        return 1;
+
+    //uint32_t irq_set = BIT(bit_no_kbd);
+
+    uint8_t bit_no_timer = 0;
+    //uint32_t irq_set = BIT(bit_no_timer);
+
+    if (timer_subscribe_int(&bit_no_timer) != 0) return 1;
+    if (timer_set_frequency(0, 60) != 0) return 1;  
     
     message msg;
     int ipc_status;
     bool running = true;
-    if (timer_set_frequency(0, 60) != 0) return 1; 
 
     int timer_ticks = 0;
 
