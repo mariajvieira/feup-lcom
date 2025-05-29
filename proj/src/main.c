@@ -81,7 +81,7 @@ int (proj_main_loop)(int argc, char *argv[]) {
             }
             if (!menu_is_active() && (msg.m_notify.interrupts & BIT(timer_mask))) {
                 timer_ticks++;
-                if (timer_ticks >= 2) { // 30 ticks = 0,5s se timer a 60Hz
+                if (timer_ticks >= 6) { 
                     update_game();
                     draw_game();
                     timer_ticks = 0;

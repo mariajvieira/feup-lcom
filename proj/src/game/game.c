@@ -36,11 +36,6 @@ static void init_game(void) {
 }
 
 static void spawn_food(void) {
-    // uint16_t cols = mode_info.XResolution / CELL_SIZE;
-    // uint16_t rows = mode_info.YResolution / CELL_SIZE;
-
-    // food_x = (rand() % cols) * CELL_SIZE;
-    // food_y = (rand() % rows) * CELL_SIZE;
 
     food_x = (rand() % (mode_info.XResolution / CELL_SIZE)) * CELL_SIZE;
     food_y = (rand() % (mode_info.YResolution / CELL_SIZE)) * CELL_SIZE;
@@ -48,14 +43,13 @@ static void spawn_food(void) {
 }
 
 void draw_game(void) {
+    vg_draw_rectangle(0,0, mode_info.XResolution, mode_info.YResolution, 0xdddddA); 
     vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, 0x000000); 
 
     vg_draw_rectangle(food_x, food_y, CELL_SIZE, CELL_SIZE, 0xFFFA00);
 
     for (int i = 0; i < snake_len; i++)
         vg_draw_rectangle(snake_x[i], snake_y[i], CELL_SIZE, CELL_SIZE, 0x00FF00);
-    
-    draw_score();
 }
 
 
@@ -67,27 +61,35 @@ void update_game(void) {
     snake_x[0] += dir_x * CELL_SIZE;
     snake_y[0] += dir_y * CELL_SIZE;
 
-    // comida comida
+    if (snake_x[0] < 0 || snake_x[0] >= mode_info.XResolution ||
+        snake_y[0] < 0 || snake_y[0] >= mode_info.YResolution) {
+        running = false;
+        draw_game_over();
+        return;
+    }
+
+    for (int i = 1; i < snake_len; i++) {
+        if (snake_x[0] == snake_x[i] && snake_y[0] == snake_y[i]) {
+            running = false;
+            draw_game_over();
+            return;
+        }
+    }
+
     if (snake_x[0] == food_x && snake_y[0] == food_y) {
         if (snake_len < MAX_SNAKE_LEN) snake_len++;
         spawn_food();
         score++;  // Increment score when food is eaten
     }
-
-    // // a cada 5 segundos, nova comida
-    // food_timer++;
-    // if (food_timer >= 5 * 60) { // 5 segundos se timer a 60Hz
-    //     spawn_food();
-    // }
 }
 
 
 void handle_key(uint8_t scancode) {
     switch (scancode) {
-        case W_KEY: dir_x = 0;  dir_y = -1; break;
-        case S_KEY: dir_x = 0;  dir_y =  1; break;
-        case A_KEY: dir_x = -1; dir_y =  0; break;
-        case D_KEY: dir_x =  1; dir_y =  0; break;
+        case W_KEY: if (dir_y != 1) { dir_x = 0;  dir_y = -1; } break;
+        case S_KEY: if (dir_y != -1){ dir_x = 0;  dir_y =  1; } break;
+        case A_KEY: if (dir_x != 1) { dir_x = -1; dir_y =  0; } break;
+        case D_KEY: if (dir_x != -1){ dir_x =  1; dir_y =  0; } break;
         case ESC_BREAK_CODE:
             running = false;
             break;
@@ -107,6 +109,21 @@ void game_start(void) {
     init_game();
     spawn_food();
     running = true;
+}
+
+
+void draw_game_over(void) {
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, 0x000000); 
+
+    int x = mode_info.XResolution / 2 - 100;
+    int y = mode_info.YResolution / 2 - 10;
+    vg_draw_rectangle(x, y, 200, 20, 0xF65AA0); 
+    // vg_draw_text(x, y, "GAME OVER", 0xFFFFFF); 
+
+    tickdelay(micros_to_ticks(1000000)); 
+
+
+    menu_set_active(true);
 
     // handle_key(0); 
     // update_game();
