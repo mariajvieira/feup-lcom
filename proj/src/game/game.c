@@ -17,6 +17,7 @@ static int      dir_x, dir_y;
 static uint16_t food_x, food_y;
 static bool     running;
 static int food_timer = 0; 
+static int score = 0;  // Add the score variable
 
 static void init_game(void) {
     snake_len = INIT_SNAKE_LEN;
@@ -25,11 +26,13 @@ static void init_game(void) {
     uint16_t rows = mode_info.YResolution / CELL_SIZE;
     uint16_t cx = cols  / 2 * CELL_SIZE;
     uint16_t cy = rows  / 2 * CELL_SIZE;
+    
     for (int i = 0; i < snake_len; i++) {
         snake_x[i] = cx - i * CELL_SIZE;
         snake_y[i] = cy;
     }
-    food_timer=0;
+    food_timer = 0;
+    score = 0;  // Reset score when game starts
 }
 
 static void spawn_food(void) {
@@ -45,14 +48,14 @@ static void spawn_food(void) {
 }
 
 void draw_game(void) {
-    vg_draw_rectangle(0,0, mode_info.XResolution, mode_info.YResolution, 0x000000); 
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, 0x000000); 
 
     vg_draw_rectangle(food_x, food_y, CELL_SIZE, CELL_SIZE, 0xFFFA00);
 
     for (int i = 0; i < snake_len; i++)
         vg_draw_rectangle(snake_x[i], snake_y[i], CELL_SIZE, CELL_SIZE, 0x00FF00);
-
-
+    
+    draw_score();
 }
 
 
@@ -68,6 +71,7 @@ void update_game(void) {
     if (snake_x[0] == food_x && snake_y[0] == food_y) {
         if (snake_len < MAX_SNAKE_LEN) snake_len++;
         spawn_food();
+        score++;  // Increment score when food is eaten
     }
 
     // // a cada 5 segundos, nova comida
@@ -92,13 +96,17 @@ void handle_key(uint8_t scancode) {
     }
 }
 
+void draw_score(void) {
+    //vg_draw_rectangle(10, 10, 50, 10, 0xFFFFFF);
+    vg_draw_rectangle(60, 10, score * 5, 10, 0xFFFFFF);
+}
+
 
 void game_start(void) {
 
     init_game();
     spawn_food();
     running = true;
-
 
     // handle_key(0); 
     // update_game();
