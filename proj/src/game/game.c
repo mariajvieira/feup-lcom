@@ -98,8 +98,8 @@ void handle_key(uint8_t scancode) {
 }
 
 void draw_score(void) {
-    vg_draw_rectangle(10, 10, 40, 10, 0xFFFFFF);
-    draw_number(60, 10, score, 0xFFFFFF);
+    draw_text(10, 10, "SCORE", 0xFFFFFF);
+    draw_number(90, 10, score, 0xFFFFFF);
 }
 
 void game_start(void) {
