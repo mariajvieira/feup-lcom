@@ -153,16 +153,19 @@ void menu_handle_key(uint8_t scancode) {
                 case MENU_LEVEL_1:
                     menu_set_active(false);   
                     printf("LEVEL 1 SELECTED\n");
+                    game_set_level(1);    
                     game_start();
                     break;
                 case MENU_LEVEL_2:
                     menu_set_active(false);   
                     printf("LEVEL 2 SELECTED\n");
+                    game_set_level(2);    
                     game_start();
                     break;
                 case MENU_LEVEL_3:
                     menu_set_active(false);   
                     printf("LEVEL 3 SELECTED\n");
+                    game_set_level(3);    
                     game_start();
                     break;
                 case MENU_HELP:

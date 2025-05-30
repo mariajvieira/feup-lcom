@@ -15,6 +15,11 @@
 #define GAME_AREA_WIDTH  400
 #define GAME_AREA_HEIGHT 300
 
+static int curr_game_area_width;
+static int curr_game_area_height;
+int update_tick_threshold;  
+static int game_level = 2;
+
 static uint16_t snake_x[MAX_SNAKE_LEN];
 static uint16_t snake_y[MAX_SNAKE_LEN];
 static int      snake_len;
@@ -29,18 +34,45 @@ static uint16_t game_end_x;
 static uint16_t game_end_y;
 
 static bool game_running = true;
+static bool score_updated = false;
+
+void game_set_level(int level) {
+  switch(level) {
+    case 1:
+      curr_game_area_width = 600;
+      curr_game_area_height = 450;
+      update_tick_threshold = 10; 
+      break;
+    case 2:
+      curr_game_area_width = 400;
+      curr_game_area_height = 300;
+      update_tick_threshold = 6;  
+      break;
+    case 3:
+      curr_game_area_width = 300;
+      curr_game_area_height = 225;
+      update_tick_threshold = 4; 
+      break;
+    default:
+      curr_game_area_width = 400;
+      curr_game_area_height = 300;
+      update_tick_threshold = 6;
+      break;
+  }
+}
+
 
 static void init_game(void) {
     snake_len = INIT_SNAKE_LEN;
     dir_x = 1; dir_y = 0;
     
-    game_start_x = (mode_info.XResolution - GAME_AREA_WIDTH) / 2;
-    game_start_y = (mode_info.YResolution - GAME_AREA_HEIGHT) / 2;
-    game_end_x = game_start_x + GAME_AREA_WIDTH;
-    game_end_y = game_start_y + GAME_AREA_HEIGHT;
+    game_start_x = (mode_info.XResolution - curr_game_area_width) / 2;
+    game_start_y = (mode_info.YResolution - curr_game_area_height) / 2;
+    game_end_x = game_start_x + curr_game_area_width;
+    game_end_y = game_start_y + curr_game_area_height;
     
-    uint16_t cols = GAME_AREA_WIDTH / CELL_SIZE;
-    uint16_t rows = GAME_AREA_HEIGHT / CELL_SIZE;
+    uint16_t cols = curr_game_area_width / CELL_SIZE;
+    uint16_t rows = curr_game_area_height / CELL_SIZE;
     uint16_t cx = game_start_x + (cols / 2) * CELL_SIZE;
     uint16_t cy = game_start_y + (rows / 2) * CELL_SIZE;
     
@@ -53,8 +85,8 @@ static void init_game(void) {
 }
 
 static void spawn_food(void) {
-    uint16_t cols = GAME_AREA_WIDTH / CELL_SIZE;
-    uint16_t rows = GAME_AREA_HEIGHT / CELL_SIZE;
+    uint16_t cols = curr_game_area_width / CELL_SIZE;
+    uint16_t rows = curr_game_area_height / CELL_SIZE;
     
     food_x = game_start_x + (rand() % cols) * CELL_SIZE;
     food_y = game_start_y + (rand() % rows) * CELL_SIZE;
@@ -62,41 +94,30 @@ static void spawn_food(void) {
 }
 
 void draw_game(void) {
-    // Background
-    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, 0x333333); 
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, 0x333333);
     
-    // Borders
     vg_draw_rectangle(game_start_x - BORDER_WIDTH, game_start_y - BORDER_WIDTH, 
-                      GAME_AREA_WIDTH + 2 * BORDER_WIDTH, BORDER_WIDTH, 0x666666);
-    
-    vg_draw_rectangle(game_start_x - BORDER_WIDTH, game_start_y + GAME_AREA_HEIGHT, 
-                      GAME_AREA_WIDTH + 2 * BORDER_WIDTH, BORDER_WIDTH, 0x666666);
-    
+                      curr_game_area_width + 2 * BORDER_WIDTH, BORDER_WIDTH, 0x666666);
+    vg_draw_rectangle(game_start_x - BORDER_WIDTH, game_start_y + curr_game_area_height, 
+                      curr_game_area_width + 2 * BORDER_WIDTH, BORDER_WIDTH, 0x666666);
     vg_draw_rectangle(game_start_x - BORDER_WIDTH, game_start_y, 
-                      BORDER_WIDTH, GAME_AREA_HEIGHT, 0x666666);
+                      BORDER_WIDTH, curr_game_area_height, 0x666666);
+    vg_draw_rectangle(game_start_x + curr_game_area_width, game_start_y, 
+                      BORDER_WIDTH, curr_game_area_height, 0x666666);
     
-    vg_draw_rectangle(game_start_x + GAME_AREA_WIDTH, game_start_y, 
-                      BORDER_WIDTH, GAME_AREA_HEIGHT, 0x666666);
+    vg_draw_rectangle(game_start_x, game_start_y, curr_game_area_width, curr_game_area_height, 0xdddddd);
     
-    // Game area
-    vg_draw_rectangle(game_start_x, game_start_y, GAME_AREA_WIDTH, GAME_AREA_HEIGHT, 0xdddddd);
-
-    // Game title
-    int title_x = game_start_x + (GAME_AREA_WIDTH / 2) - 60;
+    int title_x = game_start_x + (curr_game_area_width / 2) - 60;
     int title_y = game_start_y - BORDER_WIDTH - 70;
     draw_text(title_x, title_y, "SNAKE GAME", 0xFFFFFF);
-
-    // Score
+    
     draw_score();
-
-    // Food
+    
     vg_draw_rectangle(food_x, food_y, CELL_SIZE, CELL_SIZE, 0xFFFA00);
-    // Snake
     for (int i = 0; i < snake_len; i++)
         vg_draw_rectangle(snake_x[i], snake_y[i], CELL_SIZE, CELL_SIZE, 0x00FF00);
 }
 
-static bool score_updated = false;
 
 void update_game(void) {
     for (int i = snake_len - 1; i > 0; i--) {
@@ -143,11 +164,10 @@ void handle_key(uint8_t scancode) {
 }
 
 void draw_score(void) {
-
-    int score_x = game_start_x + (GAME_AREA_WIDTH / 2) - 50; 
+    int score_x = game_start_x + (curr_game_area_width / 2) - 50; 
     int score_y = game_start_y - BORDER_WIDTH - 30;
     draw_text(score_x, score_y, "SCORE", 0xFFFFFF);
-    draw_number(score_x+80, score_y, score, 0xFFFFFF);
+    draw_number(score_x + 200, score_y, score, 0xFFFFFF);
 }
 
 void game_start(void) {
@@ -186,13 +206,13 @@ void draw_game_over(void) {
 }
 
 void draw_score_static(void) {
-    int score_x = game_start_x + (GAME_AREA_WIDTH / 2) - 50; 
+    int score_x = game_start_x + (curr_game_area_width / 2) - 50; 
     int score_y = game_start_y - BORDER_WIDTH - 30;
     draw_text(score_x, score_y, "SCORE", 0xFFFFFF);
 }
 
 void draw_score_dynamic(void) {
-    int score_x = game_start_x + (GAME_AREA_WIDTH / 2) - 50; 
+    int score_x = game_start_x + (curr_game_area_width/ 2) - 50; 
     int score_y = game_start_y - BORDER_WIDTH - 30;
     
     int num_digits = 0;
@@ -213,17 +233,17 @@ void draw_score_dynamic(void) {
 void draw_game_static(void) {
     vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, 0x333333); 
     vg_draw_rectangle(game_start_x - BORDER_WIDTH, game_start_y - BORDER_WIDTH,  
-                      GAME_AREA_WIDTH + 2 * BORDER_WIDTH, BORDER_WIDTH, 0x666666);
-    vg_draw_rectangle(game_start_x - BORDER_WIDTH, game_start_y + GAME_AREA_HEIGHT, 
-                      GAME_AREA_WIDTH + 2 * BORDER_WIDTH, BORDER_WIDTH, 0x666666);
+                      curr_game_area_width + 2 * BORDER_WIDTH, BORDER_WIDTH, 0x666666);
+    vg_draw_rectangle(game_start_x - BORDER_WIDTH, game_start_y + curr_game_area_height, 
+                      curr_game_area_width + 2 * BORDER_WIDTH, BORDER_WIDTH, 0x666666);
     vg_draw_rectangle(game_start_x - BORDER_WIDTH, game_start_y,  
-                      BORDER_WIDTH, GAME_AREA_HEIGHT, 0x666666);
-    vg_draw_rectangle(game_start_x + GAME_AREA_WIDTH, game_start_y,  
-                      BORDER_WIDTH, GAME_AREA_HEIGHT, 0x666666);
+                      BORDER_WIDTH, curr_game_area_height, 0x666666);
+    vg_draw_rectangle(game_start_x + curr_game_area_width, game_start_y,  
+                      BORDER_WIDTH, curr_game_area_height, 0x666666);
     
-    vg_draw_rectangle(game_start_x, game_start_y, GAME_AREA_WIDTH, GAME_AREA_HEIGHT, 0xdddddd);
+    vg_draw_rectangle(game_start_x, game_start_y, curr_game_area_width, curr_game_area_height, 0xdddddd);
     
-    int title_x = game_start_x + (GAME_AREA_WIDTH / 2) - 60;
+    int title_x = game_start_x + (curr_game_area_width / 2) - 60;
     int title_y = game_start_y - BORDER_WIDTH - 70;
     draw_text(title_x, title_y, "SNAKE GAME", 0xFFFFFF);
     
@@ -231,8 +251,7 @@ void draw_game_static(void) {
 }
 
 void draw_game_dynamic(void) {
-    vg_draw_rectangle(game_start_x, game_start_y, GAME_AREA_WIDTH, GAME_AREA_HEIGHT, 0xdddddd);
-    
+    vg_draw_rectangle(game_start_x, game_start_y, curr_game_area_width, curr_game_area_height, 0xdddddd);
     if (score_updated) {
         draw_score_dynamic();
         score_updated = false;

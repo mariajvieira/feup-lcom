@@ -11,6 +11,8 @@
 static uint8_t kbd_mask;
 static uint8_t timer_mask; 
 extern uint8_t scancode;
+extern int update_tick_threshold;
+
 
 int main(int argc, char *argv[]) {
   // sets the language of LCF messages (can be either EN-US or PT-PT)
@@ -89,7 +91,7 @@ int (proj_main_loop)(int argc, char *argv[]) {
             
             if (!menu_is_active() && (msg.m_notify.interrupts & BIT(timer_mask))) {
                 timer_ticks++;
-                if (timer_ticks >= 6) {
+                if (timer_ticks >= update_tick_threshold) {
                     update_game();
                     need_redraw = true;
                     timer_ticks = 0;
