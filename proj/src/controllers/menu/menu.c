@@ -25,7 +25,15 @@ static const char* menu_items_text[MENU_ITEMS_COUNT] = {
     "EXIT"
 };
 
-int menu_init() {
+/**
+ * @brief Initializes the main menu.
+ *
+ * Sets the default selected item, activates the menu and
+ * computes the menu window dimensions and position.
+ *
+ * @return 0 on success, non-zero on error.
+ */
+int menu_init(void) {
     menu_state.selected_item = MENU_LEVEL_1;
     menu_state.is_active = true;
     
@@ -37,11 +45,21 @@ int menu_init() {
     return 0;
 }
 
-static int draw_background() {
+/**
+ * @brief Draws the solid background for the menu.
+ *
+ * @return 0 on success, non-zero on error.
+ */
+static int draw_background(void) {
     return vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR);
 }
 
-static int draw_menu_window() {
+/**
+ * @brief Draws the bordered window where menu items appear.
+ *
+ * @return 0 on success, non-zero on error.
+ */
+static int draw_menu_window(void) {
     if (vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, 
                          menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR))
         return 1;
@@ -57,7 +75,12 @@ static int draw_menu_window() {
     return 0;
 }
 
-static int draw_title() {
+/**
+ * @brief Draws the menu title bar with "SNAKE GAME".
+ *
+ * @return 0 on success, non-zero on error.
+ */
+static int draw_title(void) {
     uint16_t title_x = menu_state.window_x + 50;
     uint16_t title_y = menu_state.window_y + 30;
     
@@ -71,7 +94,12 @@ static int draw_title() {
     return 0;
 }
 
-static int draw_menu_items() {
+/**
+ * @brief Renders each menu item, highlighting the selected one.
+ *
+ * @return 0 on success, non-zero on error.
+ */
+static int draw_menu_items(void) {
     uint16_t item_height = 40;
     uint16_t item_width = menu_state.window_w - 100;
     uint16_t start_x = menu_state.window_x + 50;
@@ -104,7 +132,12 @@ static int draw_menu_items() {
     return 0;
 }
 
-static int draw_instructions() {
+/**
+ * @brief Draws navigation instructions at the bottom of the menu.
+ *
+ * @return 0 on success, non-zero on error.
+ */
+static int draw_instructions(void) {
     uint16_t instr_y = menu_state.window_y + menu_state.window_h - 60;
     uint16_t instr_x = menu_state.window_x + 20;
     
@@ -118,7 +151,14 @@ static int draw_instructions() {
     return 0;
 }
 
-int menu_draw() {
+/**
+ * @brief Draws the complete menu if it is active.
+ *
+ * Calls the background, window, title, items and instruction routines.
+ *
+ * @return 0 on success, non-zero on error.
+ */
+int menu_draw(void) {
     if (!menu_state.is_active)
         return 0;
     
@@ -131,6 +171,11 @@ int menu_draw() {
     return 0;
 }
 
+/**
+ * @brief Processes a key press to navigate or select menu items.
+ *
+ * @param scancode PS/2 scancode of the pressed key.
+ */
 void menu_handle_key(uint8_t scancode) {
     if (!menu_state.is_active)
         return;
@@ -191,14 +236,29 @@ void menu_handle_key(uint8_t scancode) {
     }
 }
 
-menu_item_t menu_get_selected() {
+/**
+ * @brief Retrieves the currently selected menu item.
+ *
+ * @return The selected menu_item_t.
+ */
+menu_item_t menu_get_selected(void) {
     return menu_state.selected_item;
 }
 
-bool menu_is_active() {
+/**
+ * @brief Checks if the menu is currently active.
+ *
+ * @return true if active, false otherwise.
+ */
+bool menu_is_active(void) {
     return menu_state.is_active;
 }
 
+/**
+ * @brief Sets the menu active state.
+ *
+ * @param active true to show menu, false to hide.
+ */
 void menu_set_active(bool active) {
     menu_state.is_active = active;
 }
