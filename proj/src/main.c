@@ -87,7 +87,7 @@ int (proj_main_loop)(int argc, char *argv[]) {
             
             if (!menu_is_active() && (msg.m_notify.interrupts & BIT(timer_mask))) {
                 timer_ticks++;
-                if (timer_ticks >= 5) {
+                if (timer_ticks >= 6) {
                     update_game();
                     need_redraw = true;
                     timer_ticks = 0;

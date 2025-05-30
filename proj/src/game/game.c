@@ -95,6 +95,8 @@ void draw_game(void) {
         vg_draw_rectangle(snake_x[i], snake_y[i], CELL_SIZE, CELL_SIZE, 0x00FF00);
 }
 
+static bool score_updated = false;
+
 void update_game(void) {
     for (int i = snake_len - 1; i > 0; i--) {
         snake_x[i] = snake_x[i-1];
@@ -102,24 +104,25 @@ void update_game(void) {
     }
     snake_x[0] += dir_x * CELL_SIZE;
     snake_y[0] += dir_y * CELL_SIZE;
-
+    
     if (snake_x[0] < game_start_x || snake_x[0] >= game_end_x ||
         snake_y[0] < game_start_y || snake_y[0] >= game_end_y) {
         draw_game_over();
         return;
     }
-
+    
     for (int i = 1; i < snake_len; i++) {
         if (snake_x[0] == snake_x[i] && snake_y[0] == snake_y[i]) {
             draw_game_over();
             return;
         }
     }
-
+    
     if (snake_x[0] == food_x && snake_y[0] == food_y) {
         if (snake_len < MAX_SNAKE_LEN) snake_len++;
         spawn_food();
         score++;
+        score_updated = true;
     }
 }
 
@@ -150,6 +153,7 @@ void game_start(void) {
 
     init_game();
     spawn_food();
+    score_updated = true;
     game_running = true;
 }
 
@@ -179,16 +183,40 @@ void draw_game_over(void) {
     menu_set_active(true);
 }
 
+void draw_score_static(void) {
+    int score_x = game_start_x + (GAME_AREA_WIDTH / 2) - 50; 
+    int score_y = game_start_y - BORDER_WIDTH - 30;
+    draw_text(score_x, score_y, "SCORE", 0xFFFFFF);
+}
+
+void draw_score_dynamic(void) {
+    int score_x = game_start_x + (GAME_AREA_WIDTH / 2) - 50; 
+    int score_y = game_start_y - BORDER_WIDTH - 30;
+    
+    int num_digits = 0;
+    int temp = score;
+    if (temp == 0) num_digits = 1;
+    else {
+        while (temp) {
+            num_digits++;
+            temp /= 10;
+        }
+    }
+    
+    int clear_width = num_digits * 12;
+    vg_draw_rectangle(score_x + 80, score_y, clear_width, 20,0x333333);
+    draw_number(score_x + 80, score_y, score, 0xFFFFFF);
+}
+
 void draw_game_static(void) {
     vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, 0x333333); 
-    
-    vg_draw_rectangle(game_start_x - BORDER_WIDTH, game_start_y - BORDER_WIDTH,
+    vg_draw_rectangle(game_start_x - BORDER_WIDTH, game_start_y - BORDER_WIDTH,  
                       GAME_AREA_WIDTH + 2 * BORDER_WIDTH, BORDER_WIDTH, 0x666666);
-    vg_draw_rectangle(game_start_x - BORDER_WIDTH, game_start_y + GAME_AREA_HEIGHT,
+    vg_draw_rectangle(game_start_x - BORDER_WIDTH, game_start_y + GAME_AREA_HEIGHT, 
                       GAME_AREA_WIDTH + 2 * BORDER_WIDTH, BORDER_WIDTH, 0x666666);
-    vg_draw_rectangle(game_start_x - BORDER_WIDTH, game_start_y,
+    vg_draw_rectangle(game_start_x - BORDER_WIDTH, game_start_y,  
                       BORDER_WIDTH, GAME_AREA_HEIGHT, 0x666666);
-    vg_draw_rectangle(game_start_x + GAME_AREA_WIDTH, game_start_y,
+    vg_draw_rectangle(game_start_x + GAME_AREA_WIDTH, game_start_y,  
                       BORDER_WIDTH, GAME_AREA_HEIGHT, 0x666666);
     
     vg_draw_rectangle(game_start_x, game_start_y, GAME_AREA_WIDTH, GAME_AREA_HEIGHT, 0xdddddd);
@@ -196,12 +224,17 @@ void draw_game_static(void) {
     int title_x = game_start_x + (GAME_AREA_WIDTH / 2) - 60;
     int title_y = game_start_y - BORDER_WIDTH - 70;
     draw_text(title_x, title_y, "SNAKE GAME", 0xFFFFFF);
+    
+    draw_score_static();
 }
 
 void draw_game_dynamic(void) {
-   vg_draw_rectangle(game_start_x, game_start_y, GAME_AREA_WIDTH, GAME_AREA_HEIGHT, 0xdddddd);
+    vg_draw_rectangle(game_start_x, game_start_y, GAME_AREA_WIDTH, GAME_AREA_HEIGHT, 0xdddddd);
     
-    draw_score();
+    if (score_updated) {
+        draw_score_dynamic();
+        score_updated = false;
+    }
     
     vg_draw_rectangle(food_x, food_y, CELL_SIZE, CELL_SIZE, 0xFFFA00);
     
