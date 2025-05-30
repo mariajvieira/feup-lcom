@@ -7,7 +7,7 @@
 #include "controllers/menu/menu.h"
 #include "game/game.h"
 
-static uint8_t kbd_mask;
+uint8_t kbd_mask;
 static uint8_t timer_mask; 
 extern uint8_t scancode;
 extern int update_tick_threshold;
