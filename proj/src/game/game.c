@@ -6,6 +6,7 @@
 #include "../controllers/timer/timer.c"
 #include "../controllers/timer/i8254.h"
 #include "../controllers/menu/menu.h"
+#include "highscore.h"
 
 #define CELL_SIZE       10
 #define MAX_SNAKE_LEN   100
@@ -180,7 +181,8 @@ void draw_game_over(void) {
     
     tickdelay(micros_to_ticks(2000000)); 
 
-    menu_set_active(true);
+      extern int score;
+    if (highscore_try_add(score)) menu_set_active(true);
 }
 
 void draw_score_static(void) {

@@ -9,6 +9,7 @@ typedef enum {
     MENU_LEVEL_2,
     MENU_LEVEL_3,
     MENU_HELP,
+    MENU_HIGHSCORES,
     MENU_EXIT,
     MENU_ITEMS_COUNT
 } menu_item_t;

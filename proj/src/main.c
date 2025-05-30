@@ -6,6 +6,7 @@
 #include "controllers/keyboard/i8042.h"
 #include "controllers/menu/menu.h"
 #include "game/game.h"
+#include "game/highscore.h"
 
 static uint8_t kbd_mask;
 static uint8_t timer_mask; 
@@ -48,7 +49,8 @@ int (proj_main_loop)(int argc, char *argv[]) {
     if (kbd_subscribe_int(&bit_no_kbd) != 0) return 1;
     if (timer_subscribe_int(&bit_no_timer) != 0) return 1;
     if (timer_set_frequency(0, 60) != 0) return 1;  
-    
+    highscore_init();
+
     message msg;
     int ipc_status;
     int timer_ticks = 0;

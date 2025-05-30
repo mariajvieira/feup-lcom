@@ -21,6 +21,7 @@ static const char* menu_items_text[MENU_ITEMS_COUNT] = {
     "LEVEL 2", 
     "LEVEL 3",
     "HELP",
+    "HIGHSCORES",
     "EXIT"
 };
 
@@ -166,6 +167,9 @@ void menu_handle_key(uint8_t scancode) {
                     break;
                 case MENU_HELP:
                     printf("HELP SELECTED\n");
+                    break;
+                case MENU_HIGHSCORES:
+                    highscore_draw();
                     break;
                 case MENU_EXIT:
                     printf("EXIT SELECTED\n");
