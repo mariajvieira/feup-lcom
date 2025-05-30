@@ -18,7 +18,6 @@ static int curr_game_area_width;
 static int curr_game_area_height;
 int update_tick_threshold;  
 static int game_level = 2;
-extern uint8_t kbd_mask;
 
 static uint16_t snake_x[MAX_SNAKE_LEN];
 static uint16_t snake_y[MAX_SNAKE_LEN];
@@ -261,51 +260,4 @@ void draw_game_dynamic(void) {
     for (int i = 0; i < snake_len; i++) {
         vg_draw_rectangle(snake_x[i], snake_y[i], CELL_SIZE, CELL_SIZE, 0x00FF00);
     }
-}
-
-static int draw_help() {
-    // Clear the screen (using your background color)
-    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, 0x333333);
-
-    // Draw the help text
-    draw_text(50, 50, "Snake Game Help:", 0xFFFFFF);
-    draw_text(50, 70, "Objective:", 0xFFFFFF);
-    draw_text(70, 90, "Guide your snake to eat food, grow longer, and avoid collisions with walls or yourself to earn points.", 0xFFFFFF);
-    draw_text(50, 110, "Controls:", 0xFFFFFF);
-    draw_text(70, 130, "W: Up", 0xFFFFFF);
-    draw_text(70, 150, "S: Down", 0xFFFFFF);
-    draw_text(70, 170, "A: Left", 0xFFFFFF);
-    draw_text(70, 190, "D: Right", 0xFFFFFF);
-    draw_text(70, 210, "ESC: Exit", 0xFFFFFF);
-    draw_text(50, mode_info.YResolution - 40, "Developed by: Duarte Marques, Maria Vieira, Marta Cruz", 0xFFFFFF);
-
-    return 0;
-}
-
-static void help_screen(void) {
-    message msg;
-    int ipc_status;
-    
-    // Draw the static help screen once
-    draw_help();
-    
-    // Loop until the ESC break code is received
-    while (1) {
-        if (driver_receive(ANY, &msg, &ipc_status) != OK)
-            continue;
-        
-        if (is_ipc_notify(ipc_status) && _ENDPOINT_P(msg.m_source) == HARDWARE) {
-            if (msg.m_notify.interrupts & BIT(kbd_mask)) {
-                kbc_ih(); // Process the keyboard interrupt
-                // Check for key release of ESC (break code)
-                if (scancode == ESC_BREAK_CODE) {
-                    scancode = 0;  // Reset scancode so main loop doesn't exit
-                    break;
-                }
-            }
-        }
-    }
-    
-    // Reactivate menu after exiting the help screen
-    menu_set_active(true);
 }

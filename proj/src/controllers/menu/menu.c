@@ -169,7 +169,6 @@ void menu_handle_key(uint8_t scancode) {
                     break;
                 case MENU_HELP:
                     printf("HELP SELECTED\n");
-                    help_screen();
                     break;
                 case MENU_EXIT:
                     printf("EXIT SELECTED\n");
