@@ -6,7 +6,6 @@
 #include "../controllers/timer/timer.c"
 #include "../controllers/timer/i8254.h"
 #include "../controllers/menu/menu.h"
-#include "highscore.h"
 
 #define CELL_SIZE       10
 #define MAX_SNAKE_LEN   100
@@ -19,6 +18,7 @@ static int curr_game_area_width;
 static int curr_game_area_height;
 int update_tick_threshold;  
 static int game_level = 2;
+extern uint8_t kbd_mask;
 
 static uint16_t snake_x[MAX_SNAKE_LEN];
 static uint16_t snake_y[MAX_SNAKE_LEN];
@@ -36,13 +36,6 @@ static uint16_t game_end_y;
 static bool game_running = true;
 static bool score_updated = false;
 
-extern uint8_t kbd_mask;
-
-/**
- * @brief Sets the current game area size and update tick threshold based on level.
- *
- * @param level The game level (1..3), adjusts area dimensions and speed.
- */
 void game_set_level(int level) {
   switch(level) {
     case 1:
@@ -69,9 +62,6 @@ void game_set_level(int level) {
 }
 
 
-/**
- * @brief Initializes the snake and food positions and resets score and timer.
- */
 static void init_game(void) {
     snake_len = INIT_SNAKE_LEN;
     dir_x = 1; dir_y = 0;
@@ -94,9 +84,6 @@ static void init_game(void) {
     score = 0;
 }
 
-/**
- * @brief Spawns food at a random cell within the game area.
- */
 static void spawn_food(void) {
     uint16_t cols = curr_game_area_width / CELL_SIZE;
     uint16_t rows = curr_game_area_height / CELL_SIZE;
@@ -106,9 +93,6 @@ static void spawn_food(void) {
     food_timer = 0; 
 }
 
-/**
- * @brief Draws the entire game state: background, borders, snake, food and score.
- */
 void draw_game(void) {
     vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, 0x333333);
     
@@ -135,9 +119,6 @@ void draw_game(void) {
 }
 
 
-/**
- * @brief Updates snake position, checks collisions and handles food eating.
- */
 void update_game(void) {
     for (int i = snake_len - 1; i > 0; i--) {
         snake_x[i] = snake_x[i-1];
@@ -168,10 +149,6 @@ void update_game(void) {
 }
 
 
-/**
- * @brief Handles key press events to change snake direction or exit game.
- * @param scancode The PS/2 scancode of the pressed key.
- */
 void handle_key(uint8_t scancode) {
     switch (scancode) {
         case W_KEY: if (dir_y != 1) { dir_x = 0;  dir_y = -1; } break;
@@ -186,9 +163,6 @@ void handle_key(uint8_t scancode) {
     }
 }
 
-/**
- * @brief Draws the score label and current value at the top of the play area.
- */
 void draw_score(void) {
     int score_x = game_start_x + (curr_game_area_width / 2) - 50; 
     int score_y = game_start_y - BORDER_WIDTH - 30;
@@ -196,9 +170,6 @@ void draw_score(void) {
     draw_number(score_x + 200, score_y, score, 0xFFFFFF);
 }
 
-/**
- * @brief Starts or restarts the game: initializes state and flags.
- */
 void game_start(void) {
 
     init_game();
@@ -207,25 +178,14 @@ void game_start(void) {
     game_running = true;
 }
 
-/**
- * @brief Exits the current game and returns control to the menu.
- */
 void game_exit(void) {
     game_running = false;
 }
 
-/**
- * @brief Returns whether the game is still running.
- * @return true if the game loop should continue, false otherwise.
- */
 bool game_is_running(void) {
-
     return game_running;
 }
 
-/**
- * @brief Draws the game over screen and prompts for high score entry.
- */
 void draw_game_over(void) {
     vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, 0x000000); 
 
@@ -241,26 +201,15 @@ void draw_game_over(void) {
     
     tickdelay(micros_to_ticks(2000000)); 
 
-    extern int score;
-    if (highscore_try_add(score)) {
-        menu_set_active(true);
-    } else {
-        menu_set_active(true);
-    }
+    menu_set_active(true);
 }
 
-/**
- * @brief Draws only the static part of the score (label) before dynamic updates.
- */
 void draw_score_static(void) {
     int score_x = game_start_x + (curr_game_area_width / 2) - 50; 
     int score_y = game_start_y - BORDER_WIDTH - 30;
     draw_text(score_x, score_y, "SCORE", 0xFFFFFF);
 }
 
-/**
- * @brief Draws only the numeric score dynamically during gameplay.
- */
 void draw_score_dynamic(void) {
     int score_x = game_start_x + (curr_game_area_width/ 2) - 50; 
     int score_y = game_start_y - BORDER_WIDTH - 30;
@@ -280,9 +229,6 @@ void draw_score_dynamic(void) {
     draw_number(score_x + 80, score_y, score, 0xFFFFFF);
 }
 
-/**
- * @brief Draws the static elements of the playfield (background, borders, title).
- */
 void draw_game_static(void) {
     vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, 0x333333); 
     vg_draw_rectangle(game_start_x - BORDER_WIDTH, game_start_y - BORDER_WIDTH,  
@@ -303,9 +249,6 @@ void draw_game_static(void) {
     draw_score_static();
 }
 
-/**
- * @brief Draws the dynamic elements of the playfield (food, snake segments).
- */
 void draw_game_dynamic(void) {
     vg_draw_rectangle(game_start_x, game_start_y, curr_game_area_width, curr_game_area_height, 0xdddddd);
     if (score_updated) {
@@ -320,10 +263,11 @@ void draw_game_dynamic(void) {
     }
 }
 
-
 static int draw_help() {
+    // Clear the screen (using your background color)
     vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, 0x333333);
 
+    // Draw the help text
     draw_text(50, 50, "Snake Game Help:", 0xFFFFFF);
     draw_text(50, 70, "Objective:", 0xFFFFFF);
     draw_text(70, 90, "Guide your snake to eat food, grow longer, and avoid collisions with walls or yourself to earn points.", 0xFFFFFF);
@@ -342,22 +286,26 @@ static void help_screen(void) {
     message msg;
     int ipc_status;
     
+    // Draw the static help screen once
     draw_help();
     
+    // Loop until the ESC break code is received
     while (1) {
         if (driver_receive(ANY, &msg, &ipc_status) != OK)
             continue;
         
         if (is_ipc_notify(ipc_status) && _ENDPOINT_P(msg.m_source) == HARDWARE) {
             if (msg.m_notify.interrupts & BIT(kbd_mask)) {
-                kbc_ih(); 
+                kbc_ih(); // Process the keyboard interrupt
+                // Check for key release of ESC (break code)
                 if (scancode == ESC_BREAK_CODE) {
-                    scancode = 0; 
+                    scancode = 0;  // Reset scancode so main loop doesn't exit
                     break;
                 }
             }
         }
     }
     
+    // Reactivate menu after exiting the help screen
     menu_set_active(true);
 }

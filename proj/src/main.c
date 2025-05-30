@@ -6,7 +6,6 @@
 #include "controllers/keyboard/i8042.h"
 #include "controllers/menu/menu.h"
 #include "game/game.h"
-#include "game/highscore.h"
 
 uint8_t kbd_mask;
 static uint8_t timer_mask; 
@@ -51,21 +50,18 @@ int (proj_main_loop)(int argc, char *argv[]) {
     if (kbd_subscribe_int(&bit_no_kbd) != 0) return 1;
     if (timer_subscribe_int(&bit_no_timer) != 0) return 1;
     if (timer_set_frequency(0, 60) != 0) return 1;  
-    highscore_init();
-
+    
     message msg;
     int ipc_status;
     int timer_ticks = 0;
     bool need_redraw = true;
     bool first_game_draw = true;
 
-    while (game_is_running()) {
+    while (game_is_running() && scancode != ESC_BREAK_CODE) {
         if (need_redraw) {
             if (menu_is_active()) {
                 menu_draw();
                 first_game_draw = true;  
-            } else if (highscore_is_active()) {
-                highscore_draw_screen();
             } else {
                 if (first_game_draw) {
                     draw_game_static();
@@ -84,9 +80,6 @@ int (proj_main_loop)(int argc, char *argv[]) {
                 if (!(scancode & 0x80)) {
                     if (menu_is_active()) {
                         menu_handle_key(scancode);
-                        need_redraw = true;
-                    } else if (highscore_is_active()) {
-                        highscore_handle_key(scancode);
                         need_redraw = true;
                     } else {
                         handle_key(scancode);
