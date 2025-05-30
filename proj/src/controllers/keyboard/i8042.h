@@ -26,19 +26,19 @@
 #define TO_ERR            BIT(6) /**< @brief Timeout error */
 #define PAR_ERR           BIT(7) /**< @brief Parity error */
 
-/* Scan codes */
+/* Scancodes */
 #define ESC_BREAK_CODE    0x81
 #define ENTER_KEY         0x1C
-#define SPACE_KEY         0x39
+#define SPACE_KEY         0x0E  /**< @brief Backspace key */
 #define W_KEY             0x11
-#define S_KEY             0x1F
 #define A_KEY             0x1E
+#define S_KEY             0x1F
 #define D_KEY             0x20
 #define ARROW_UP          0x48
 #define ARROW_DOWN        0x50
 #define ARROW_LEFT        0x4B
 #define ARROW_RIGHT       0x4D
 
-/** @} end of i8042 */
+/**@}*/
 
-#endif /* _LCOM_I8042_H */
+#endif /* _LCOM_I8042_H_ */

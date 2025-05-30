@@ -185,6 +185,7 @@ void game_exit(void) {
 }
 
 bool game_is_running(void) {
+
     return game_running;
 }
 
@@ -268,10 +269,8 @@ void draw_game_dynamic(void) {
 
 
 static int draw_help() {
-    // Clear the screen (using your background color)
     vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, 0x333333);
 
-    // Draw the help text
     draw_text(50, 50, "Snake Game Help:", 0xFFFFFF);
     draw_text(50, 70, "Objective:", 0xFFFFFF);
     draw_text(70, 90, "Guide your snake to eat food, grow longer, and avoid collisions with walls or yourself to earn points.", 0xFFFFFF);
@@ -290,26 +289,22 @@ static void help_screen(void) {
     message msg;
     int ipc_status;
     
-    // Draw the static help screen once
     draw_help();
     
-    // Loop until the ESC break code is received
     while (1) {
         if (driver_receive(ANY, &msg, &ipc_status) != OK)
             continue;
         
         if (is_ipc_notify(ipc_status) && _ENDPOINT_P(msg.m_source) == HARDWARE) {
             if (msg.m_notify.interrupts & BIT(kbd_mask)) {
-                kbc_ih(); // Process the keyboard interrupt
-                // Check for key release of ESC (break code)
+                kbc_ih(); 
                 if (scancode == ESC_BREAK_CODE) {
-                    scancode = 0;  // Reset scancode so main loop doesn't exit
+                    scancode = 0; 
                     break;
                 }
             }
         }
     }
     
-    // Reactivate menu after exiting the help screen
     menu_set_active(true);
 }

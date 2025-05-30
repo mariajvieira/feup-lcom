@@ -59,11 +59,13 @@ int (proj_main_loop)(int argc, char *argv[]) {
     bool need_redraw = true;
     bool first_game_draw = true;
 
-    while (game_is_running() && scancode != ESC_BREAK_CODE) {
+    while (game_is_running()) {
         if (need_redraw) {
             if (menu_is_active()) {
                 menu_draw();
                 first_game_draw = true;  
+            } else if (highscore_is_active()) {
+                highscore_draw_screen();
             } else {
                 if (first_game_draw) {
                     draw_game_static();
@@ -82,6 +84,9 @@ int (proj_main_loop)(int argc, char *argv[]) {
                 if (!(scancode & 0x80)) {
                     if (menu_is_active()) {
                         menu_handle_key(scancode);
+                        need_redraw = true;
+                    } else if (highscore_is_active()) {
+                        highscore_handle_key(scancode);
                         need_redraw = true;
                     } else {
                         handle_key(scancode);

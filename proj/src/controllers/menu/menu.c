@@ -29,8 +29,8 @@ int menu_init() {
     menu_state.selected_item = MENU_LEVEL_1;
     menu_state.is_active = true;
     
-    menu_state.window_w = mode_info.XResolution / 2;
-    menu_state.window_h = mode_info.YResolution / 2;
+    menu_state.window_w = (mode_info.XResolution * 3) / 4; 
+    menu_state.window_h = (mode_info.YResolution * 3) / 4; 
     menu_state.window_x = (mode_info.XResolution - menu_state.window_w) / 2;
     menu_state.window_y = (mode_info.YResolution - menu_state.window_h) / 2;
     
@@ -61,22 +61,22 @@ static int draw_title() {
     uint16_t title_x = menu_state.window_x + 50;
     uint16_t title_y = menu_state.window_y + 30;
     
-    if (vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR))
+    if (vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 50, MENU_SELECTED_COLOR))
         return 1;
     
     int text_x = title_x + (menu_state.window_w - 100) / 2 - 60;
-    int text_y = title_y + 15;
+    int text_y = title_y + 18; 
     draw_text(text_x, text_y, "SNAKE GAME", 0xFFFFFF);
     
     return 0;
 }
 
 static int draw_menu_items() {
-    uint16_t item_height = 45;
-    uint16_t item_width = menu_state.window_w - 80;
-    uint16_t start_x = menu_state.window_x + 40;
-    uint16_t start_y = menu_state.window_y + 100;
-    uint16_t spacing = 10;
+    uint16_t item_height = 40;
+    uint16_t item_width = menu_state.window_w - 100;
+    uint16_t start_x = menu_state.window_x + 50;
+    uint16_t start_y = menu_state.window_y + 120;
+    uint16_t spacing = 15;
     
     for (int i = 0; i < MENU_ITEMS_COUNT; i++) {
         uint16_t item_y = start_y + i * (item_height + spacing);
@@ -105,13 +105,15 @@ static int draw_menu_items() {
 }
 
 static int draw_instructions() {
-    uint16_t instr_y = menu_state.window_y + menu_state.window_h;
+    uint16_t instr_y = menu_state.window_y + menu_state.window_h - 60;
     uint16_t instr_x = menu_state.window_x + 20;
     
-    if (vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 20, 25, MENU_BORDER_COLOR))
+    if (vg_draw_rectangle(instr_x, instr_y, menu_state.window_w - 40, 30, MENU_BORDER_COLOR))
         return 1;
     
-    draw_text(instr_x + 10, instr_y + 15, "USE ARROWS TO NAVIGATE ENTER TO SELECT", MENU_SELECTED_TEXT);
+    int text_x = instr_x + 10;
+    int text_y = instr_y + 8;
+    draw_text(text_x, text_y, "USE ARROWS TO NAVIGATE ENTER TO SELECT", MENU_SELECTED_TEXT);
     
     return 0;
 }
@@ -173,7 +175,8 @@ void menu_handle_key(uint8_t scancode) {
                     help_screen();
                     break;
                 case MENU_HIGHSCORES:
-                    highscore_draw();
+                    menu_set_active(false);
+                    highscore_show(); 
                     break;
                 case MENU_EXIT:
                     printf("EXIT SELECTED\n");
