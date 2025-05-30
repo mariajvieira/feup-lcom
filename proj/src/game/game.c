@@ -241,8 +241,12 @@ void draw_game_over(void) {
     
     tickdelay(micros_to_ticks(2000000)); 
 
-      extern int score;
-    if (highscore_try_add(score)) menu_set_active(true);
+    extern int score;
+    if (highscore_try_add(score)) {
+        menu_set_active(true);
+    } else {
+        menu_set_active(true);
+    }
 }
 
 /**
