@@ -40,51 +40,50 @@ int (proj_main_loop)(int argc, char *argv[]) {
     if(menu_init()) return 1;
 
     uint8_t bit_no_kbd = 1;
-
-    if (kbd_subscribe_int(&bit_no_kbd) != 0)
-        return 1;
-
-    //uint32_t irq_set = BIT(bit_no_kbd);
-
     uint8_t bit_no_timer = 0;
-    //uint32_t irq_set = BIT(bit_no_timer);
+    
+    kbd_mask = bit_no_kbd;
+    timer_mask = bit_no_timer;
 
+    if (kbd_subscribe_int(&bit_no_kbd) != 0) return 1;
     if (timer_subscribe_int(&bit_no_timer) != 0) return 1;
     if (timer_set_frequency(0, 60) != 0) return 1;  
     
     message msg;
     int ipc_status;
-    bool running = true;
-
     int timer_ticks = 0;
+    bool need_redraw = true;
 
-    
-    while (running && scancode != ESC_BREAK_CODE) {
-        if (menu_is_active()) {
-            menu_draw();
-        } 
+    while (game_is_running() && scancode != ESC_BREAK_CODE) {
+        if (need_redraw) {
+            if (menu_is_active()) {
+                menu_draw();
+            } else {
+                draw_game();
+            }
+            need_redraw = false;
+        }
         
         if (driver_receive(ANY, &msg, &ipc_status) != OK) continue;
         
-        if (is_ipc_notify(ipc_status) &&
-            _ENDPOINT_P(msg.m_source) == HARDWARE) {
-
+        if (is_ipc_notify(ipc_status) && _ENDPOINT_P(msg.m_source) == HARDWARE) {
             if (msg.m_notify.interrupts & BIT(kbd_mask)) {
                 kbc_ih();
                 if (!(scancode & 0x80)) {
                     if (menu_is_active()) {
                         menu_handle_key(scancode);
+                        need_redraw = true;
                     } else {
                         handle_key(scancode);
                     }
                 }
             }
+            
             if (!menu_is_active() && (msg.m_notify.interrupts & BIT(timer_mask))) {
                 timer_ticks++;
-                if (timer_ticks >= 6) { 
+                if (timer_ticks >= 5) {
                     update_game();
-                    draw_game();
-                    draw_score();
+                    need_redraw = true;
                     timer_ticks = 0;
                 }
             }

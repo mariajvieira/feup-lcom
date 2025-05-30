@@ -9,5 +9,7 @@ void handle_key(uint8_t scancode);
 void draw_game_over(void);
 
 void draw_score(void);
+void game_exit(void);
+bool game_is_running(void);
 
 #endif // GAME_H

@@ -19,7 +19,6 @@ static uint16_t snake_y[MAX_SNAKE_LEN];
 static int      snake_len;
 static int      dir_x, dir_y;
 static uint16_t food_x, food_y;
-static bool     running;
 static int food_timer = 0; 
 static int score = 0;
 
@@ -27,6 +26,8 @@ static uint16_t game_start_x;
 static uint16_t game_start_y;
 static uint16_t game_end_x;
 static uint16_t game_end_y;
+
+static bool game_running = true;
 
 static void init_game(void) {
     snake_len = INIT_SNAKE_LEN;
@@ -80,7 +81,7 @@ void draw_game(void) {
     vg_draw_rectangle(game_start_x, game_start_y, GAME_AREA_WIDTH, GAME_AREA_HEIGHT, 0xdddddd);
 
     // Game title
-    int title_x = game_start_x + (GAME_AREA_WIDTH / 2) - 60; 
+    int title_x = game_start_x + (GAME_AREA_WIDTH / 2) - 60;
     int title_y = game_start_y - BORDER_WIDTH - 70;
     draw_text(title_x, title_y, "SNAKE GAME", 0xFFFFFF);
 
@@ -89,7 +90,6 @@ void draw_game(void) {
 
     // Food
     vg_draw_rectangle(food_x, food_y, CELL_SIZE, CELL_SIZE, 0xFFFA00);
-
     // Snake
     for (int i = 0; i < snake_len; i++)
         vg_draw_rectangle(snake_x[i], snake_y[i], CELL_SIZE, CELL_SIZE, 0x00FF00);
@@ -105,14 +105,12 @@ void update_game(void) {
 
     if (snake_x[0] < game_start_x || snake_x[0] >= game_end_x ||
         snake_y[0] < game_start_y || snake_y[0] >= game_end_y) {
-        running = false;
         draw_game_over();
         return;
     }
 
     for (int i = 1; i < snake_len; i++) {
         if (snake_x[0] == snake_x[i] && snake_y[0] == snake_y[i]) {
-            running = false;
             draw_game_over();
             return;
         }
@@ -133,7 +131,7 @@ void handle_key(uint8_t scancode) {
         case A_KEY: if (dir_x != 1) { dir_x = -1; dir_y =  0; } break;
         case D_KEY: if (dir_x != -1){ dir_x =  1; dir_y =  0; } break;
         case ESC_BREAK_CODE:
-            running = false;
+            game_exit(); 
             break;
         default:
             break;
@@ -152,22 +150,31 @@ void game_start(void) {
 
     init_game();
     spawn_food();
-    running = true;
+    game_running = true;
+}
+
+void game_exit(void) {
+    game_running = false;
+}
+
+bool game_is_running(void) {
+    return game_running;
 }
 
 void draw_game_over(void) {
-    
     vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, 0x000000); 
 
     int x = mode_info.XResolution / 2 - 100;
     int y = mode_info.YResolution / 2 - 10;
     vg_draw_rectangle(x, y, 200, 20, 0xF65AA0); 
-    draw_text(x+50, y+3, "GAME OVER", 0xFFFFFF); 
+    draw_text(x + 50, y + 3, "GAME OVER", 0xFFFFFF); 
     
-    tickdelay(micros_to_ticks(1000000)); 
-
+    int score_x = x + 60;
+    int score_y = y + 30;
+    draw_text(score_x, score_y, "SCORE", 0xFFFFFF);
+    draw_number(score_x + 70, score_y, score, 0xFFFFFF);
+    
+    tickdelay(micros_to_ticks(2000000)); 
 
     menu_set_active(true);
-
-    printf("START GAME SELECTED\n");
 }
