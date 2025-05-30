@@ -10,6 +10,9 @@
 #define CELL_SIZE       10
 #define MAX_SNAKE_LEN   100
 #define INIT_SNAKE_LEN  1
+#define BORDER_WIDTH    20
+#define GAME_AREA_WIDTH  400
+#define GAME_AREA_HEIGHT 300
 
 static uint16_t snake_x[MAX_SNAKE_LEN];
 static uint16_t snake_y[MAX_SNAKE_LEN];
@@ -20,13 +23,24 @@ static bool     running;
 static int food_timer = 0; 
 static int score = 0;
 
+static uint16_t game_start_x;
+static uint16_t game_start_y;
+static uint16_t game_end_x;
+static uint16_t game_end_y;
+
 static void init_game(void) {
     snake_len = INIT_SNAKE_LEN;
     dir_x = 1; dir_y = 0;
-    uint16_t cols = mode_info.XResolution / CELL_SIZE;
-    uint16_t rows = mode_info.YResolution / CELL_SIZE;
-    uint16_t cx = cols  / 2 * CELL_SIZE;
-    uint16_t cy = rows  / 2 * CELL_SIZE;
+    
+    game_start_x = (mode_info.XResolution - GAME_AREA_WIDTH) / 2;
+    game_start_y = (mode_info.YResolution - GAME_AREA_HEIGHT) / 2;
+    game_end_x = game_start_x + GAME_AREA_WIDTH;
+    game_end_y = game_start_y + GAME_AREA_HEIGHT;
+    
+    uint16_t cols = GAME_AREA_WIDTH / CELL_SIZE;
+    uint16_t rows = GAME_AREA_HEIGHT / CELL_SIZE;
+    uint16_t cx = game_start_x + (cols / 2) * CELL_SIZE;
+    uint16_t cy = game_start_y + (rows / 2) * CELL_SIZE;
     
     for (int i = 0; i < snake_len; i++) {
         snake_x[i] = cx - i * CELL_SIZE;
@@ -37,17 +51,46 @@ static void init_game(void) {
 }
 
 static void spawn_food(void) {
-
-    food_x = (rand() % (mode_info.XResolution / CELL_SIZE)) * CELL_SIZE;
-    food_y = (rand() % (mode_info.YResolution / CELL_SIZE)) * CELL_SIZE;
+    uint16_t cols = GAME_AREA_WIDTH / CELL_SIZE;
+    uint16_t rows = GAME_AREA_HEIGHT / CELL_SIZE;
+    
+    food_x = game_start_x + (rand() % cols) * CELL_SIZE;
+    food_y = game_start_y + (rand() % rows) * CELL_SIZE;
     food_timer = 0; 
 }
 
 void draw_game(void) {
-    vg_draw_rectangle(0,0, mode_info.XResolution, mode_info.YResolution, 0xdddddA); 
+    // Background
+    vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, 0x333333); 
+    
+    // Borders
+    vg_draw_rectangle(game_start_x - BORDER_WIDTH, game_start_y - BORDER_WIDTH, 
+                      GAME_AREA_WIDTH + 2 * BORDER_WIDTH, BORDER_WIDTH, 0x666666);
+    
+    vg_draw_rectangle(game_start_x - BORDER_WIDTH, game_start_y + GAME_AREA_HEIGHT, 
+                      GAME_AREA_WIDTH + 2 * BORDER_WIDTH, BORDER_WIDTH, 0x666666);
+    
+    vg_draw_rectangle(game_start_x - BORDER_WIDTH, game_start_y, 
+                      BORDER_WIDTH, GAME_AREA_HEIGHT, 0x666666);
+    
+    vg_draw_rectangle(game_start_x + GAME_AREA_WIDTH, game_start_y, 
+                      BORDER_WIDTH, GAME_AREA_HEIGHT, 0x666666);
+    
+    // Game area
+    vg_draw_rectangle(game_start_x, game_start_y, GAME_AREA_WIDTH, GAME_AREA_HEIGHT, 0xdddddd);
 
+    // Game title
+    int title_x = game_start_x + (GAME_AREA_WIDTH / 2) - 60; 
+    int title_y = game_start_y - BORDER_WIDTH - 70;
+    draw_text(title_x, title_y, "SNAKE GAME", 0xFFFFFF);
+
+    // Score
+    draw_score();
+
+    // Food
     vg_draw_rectangle(food_x, food_y, CELL_SIZE, CELL_SIZE, 0xFFFA00);
 
+    // Snake
     for (int i = 0; i < snake_len; i++)
         vg_draw_rectangle(snake_x[i], snake_y[i], CELL_SIZE, CELL_SIZE, 0x00FF00);
 }
@@ -60,8 +103,8 @@ void update_game(void) {
     snake_x[0] += dir_x * CELL_SIZE;
     snake_y[0] += dir_y * CELL_SIZE;
 
-    if (snake_x[0] < 0 || snake_x[0] >= mode_info.XResolution ||
-        snake_y[0] < 0 || snake_y[0] >= mode_info.YResolution) {
+    if (snake_x[0] < game_start_x || snake_x[0] >= game_end_x ||
+        snake_y[0] < game_start_y || snake_y[0] >= game_end_y) {
         running = false;
         draw_game_over();
         return;
@@ -98,8 +141,11 @@ void handle_key(uint8_t scancode) {
 }
 
 void draw_score(void) {
-    draw_text(10, 10, "SCORE", 0xFFFFFF);
-    draw_number(90, 10, score, 0xFFFFFF);
+
+    int score_x = game_start_x + (GAME_AREA_WIDTH / 2) - 50; 
+    int score_y = game_start_y - BORDER_WIDTH - 30;
+    draw_text(score_x, score_y, "SCORE", 0xFFFFFF);
+    draw_number(score_x+80, score_y, score, 0xFFFFFF);
 }
 
 void game_start(void) {
@@ -110,13 +156,14 @@ void game_start(void) {
 }
 
 void draw_game_over(void) {
+    
     vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, 0x000000); 
 
     int x = mode_info.XResolution / 2 - 100;
     int y = mode_info.YResolution / 2 - 10;
     vg_draw_rectangle(x, y, 200, 20, 0xF65AA0); 
-    // vg_draw_text(x, y, "GAME OVER", 0xFFFFFF); 
-
+    draw_text(x+50, y+3, "GAME OVER", 0xFFFFFF); 
+    
     tickdelay(micros_to_ticks(1000000)); 
 
 

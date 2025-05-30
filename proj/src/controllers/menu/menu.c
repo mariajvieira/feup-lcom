@@ -51,7 +51,14 @@ static int draw_title() {
     uint16_t title_x = menu_state.window_x + 50;
     uint16_t title_y = menu_state.window_y + 30;
     
-    return vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR);
+    if (vg_draw_rectangle(title_x, title_y, menu_state.window_w - 100, 40, MENU_SELECTED_COLOR))
+        return 1;
+    
+    int text_x = title_x + 150; 
+    int text_y = title_y + 15; // Centrar verticalmente
+    draw_text(text_x, text_y, "SNAKE GAME", 0xFFFFFF);
+    
+    return 0;
 }
 
 static int draw_menu_items() {
