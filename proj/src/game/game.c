@@ -166,7 +166,7 @@ void draw_score(void) {
     int score_x = game_start_x + (curr_game_area_width / 2) - 50; 
     int score_y = game_start_y - BORDER_WIDTH - 30;
     draw_text(score_x, score_y, "SCORE", 0xFFFFFF);
-    draw_number(score_x + 80, score_y, score, 0xFFFFFF);
+    draw_number(score_x + 200, score_y, score, 0xFFFFFF);
 }
 
 void game_start(void) {
@@ -210,7 +210,7 @@ void draw_score_static(void) {
 }
 
 void draw_score_dynamic(void) {
-    int score_x = game_start_x + (GAME_AREA_WIDTH / 2) - 50; 
+    int score_x = game_start_x + (curr_game_area_width/ 2) - 50; 
     int score_y = game_start_y - BORDER_WIDTH - 30;
     
     int num_digits = 0;
