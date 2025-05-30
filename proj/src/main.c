@@ -53,13 +53,19 @@ int (proj_main_loop)(int argc, char *argv[]) {
     int ipc_status;
     int timer_ticks = 0;
     bool need_redraw = true;
+    bool first_game_draw = true;
 
     while (game_is_running() && scancode != ESC_BREAK_CODE) {
         if (need_redraw) {
             if (menu_is_active()) {
                 menu_draw();
+                first_game_draw = true;  
             } else {
-                draw_game();
+                if (first_game_draw) {
+                    draw_game_static();
+                    first_game_draw = false;
+                }
+                draw_game_dynamic();
             }
             need_redraw = false;
         }

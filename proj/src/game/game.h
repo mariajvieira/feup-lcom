@@ -11,5 +11,7 @@ void draw_game_over(void);
 void draw_score(void);
 void game_exit(void);
 bool game_is_running(void);
+void draw_game_static(void);
+void draw_game_dynamic(void);
 
 #endif // GAME_H
