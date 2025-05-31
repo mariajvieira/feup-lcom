@@ -3,7 +3,6 @@
 #include "../keyboard/i8042.h"
 #include "../../game/digits.h"
 #include "../../game/game.c"
-#include "../../xpm/start.xpm"
 #include <string.h>
 
 static menu_state_t menu_state;
@@ -23,8 +22,17 @@ static const char* menu_items_text[MENU_ITEMS_COUNT] = {
     "HELP",
     "EXIT"
 };
+/**
+ * @brief Initializes the main menu.
+ *
+ * Sets the default selected item, activates the menu and
+ * computes the menu window dimensions and position.
+ *
+ * @return 0 on success, non-zero on error.
+ */
 
 int menu_init() {
+    
     menu_state.selected_item = MENU_LEVEL_1;
     menu_state.is_active = true;
     
@@ -35,11 +43,19 @@ int menu_init() {
     
     return 0;
 }
-
+/**
+ * @brief Draws the solid background for the menu.
+ *
+ * @return 0 on success, non-zero on error.
+ */
 static int draw_background() {
     return vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, MENU_BG_COLOR);
 }
-
+/**
+ * @brief Draws the bordered window where menu items appear.
+ *
+ * @return 0 on success, non-zero on error.
+ */
 static int draw_menu_window() {
     if (vg_draw_rectangle(menu_state.window_x + 5, menu_state.window_y + 5, 
                          menu_state.window_w, menu_state.window_h, MENU_BORDER_COLOR))
@@ -55,6 +71,11 @@ static int draw_menu_window() {
     
     return 0;
 }
+/**
+ * @brief Draws the menu title bar with "SNAKE GAME".
+ *
+ * @return 0 on success, non-zero on error.
+ */
 
 static int draw_title() {
     uint16_t title_x = menu_state.window_x + 50;
@@ -69,7 +90,11 @@ static int draw_title() {
     
     return 0;
 }
-
+/**
+ * @brief Renders each menu item, highlighting the selected one.
+ *
+ * @return 0 on success, non-zero on error.
+ */
 static int draw_menu_items() {
     uint16_t item_height = 45;
     uint16_t item_width = menu_state.window_w - 80;
@@ -102,7 +127,11 @@ static int draw_menu_items() {
     
     return 0;
 }
-
+/**
+ * @brief Draws navigation instructions at the bottom of the menu.
+ *
+ * @return 0 on success, non-zero on error.
+ */
 static int draw_instructions() {
     uint16_t instr_y = menu_state.window_y + menu_state.window_h;
     uint16_t instr_x = menu_state.window_x + 20;
@@ -114,7 +143,13 @@ static int draw_instructions() {
     
     return 0;
 }
-
+/**
+ * @brief Draws the complete menu if it is active.
+ *
+ * Calls the background, window, title, items and instruction routines.
+ *
+ * @return 0 on success, non-zero on error.
+ */
 int menu_draw() {
     if (!menu_state.is_active)
         return 0;
@@ -127,6 +162,11 @@ int menu_draw() {
     
     return 0;
 }
+/**
+ * @brief Processes a key press to navigate or select menu items.
+ *
+ * @param scancode PS/2 scancode of the pressed key.
+ */
 
 void menu_handle_key(uint8_t scancode) {
     if (!menu_state.is_active)
@@ -183,14 +223,29 @@ void menu_handle_key(uint8_t scancode) {
             break;
     }
 }
+/**
+ * @brief Retrieves the currently selected menu item.
+ *
+ * @return The selected menu_item_t.
+ */
 
 menu_item_t menu_get_selected() {
     return menu_state.selected_item;
 }
+/**
+ * @brief Checks if the menu is currently active.
+ *
+ * @return true if active, false otherwise.
+ */
 
 bool menu_is_active() {
     return menu_state.is_active;
 }
+/**
+ * @brief Sets the menu active state.
+ *
+ * @param active true to show menu, false to hide.
+ */
 
 void menu_set_active(bool active) {
     menu_state.is_active = active;

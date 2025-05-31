@@ -35,7 +35,11 @@ static uint16_t game_end_y;
 
 static bool game_running = true;
 static bool score_updated = false;
-
+/**
+ * @brief Sets the current game area size and update tick threshold based on level.
+ *
+ * @param level The game level (1..3), adjusts area dimensions and speed.
+ */
 void game_set_level(int level) {
   switch(level) {
     case 1:
@@ -61,7 +65,9 @@ void game_set_level(int level) {
   }
 }
 
-
+/**
+ * @brief Initializes the snake and food positions and resets score and timer.
+ */
 static void init_game(void) {
     snake_len = INIT_SNAKE_LEN;
     dir_x = 1; dir_y = 0;
@@ -83,7 +89,9 @@ static void init_game(void) {
     food_timer = 0;
     score = 0;
 }
-
+/**
+ * @brief Spawns food at a random cell within the game area.
+ */
 static void spawn_food(void) {
     uint16_t cols = curr_game_area_width / CELL_SIZE;
     uint16_t rows = curr_game_area_height / CELL_SIZE;
@@ -92,7 +100,9 @@ static void spawn_food(void) {
     food_y = game_start_y + (rand() % rows) * CELL_SIZE;
     food_timer = 0; 
 }
-
+/**
+ * @brief Draws the entire game state: background, borders, snake, food and score.
+ */
 void draw_game(void) {
     vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, 0x333333);
     
@@ -118,7 +128,9 @@ void draw_game(void) {
         vg_draw_rectangle(snake_x[i], snake_y[i], CELL_SIZE, CELL_SIZE, 0x00FF00);
 }
 
-
+/**
+ * @brief Updates snake position, checks collisions and handles food eating.
+ */
 void update_game(void) {
     for (int i = snake_len - 1; i > 0; i--) {
         snake_x[i] = snake_x[i-1];
@@ -148,7 +160,10 @@ void update_game(void) {
     }
 }
 
-
+/**
+ * @brief Handles key press events to change snake direction or exit game.
+ * @param scancode The PS/2 scancode of the pressed key.
+ */
 void handle_key(uint8_t scancode) {
     switch (scancode) {
         case W_KEY: if (dir_y != 1) { dir_x = 0;  dir_y = -1; } break;
@@ -162,14 +177,18 @@ void handle_key(uint8_t scancode) {
             break;
     }
 }
-
+/**
+ * @brief Draws the score label and current value at the top of the play area.
+ */
 void draw_score(void) {
     int score_x = game_start_x + (curr_game_area_width / 2) - 50; 
     int score_y = game_start_y - BORDER_WIDTH - 30;
     draw_text(score_x, score_y, "SCORE", 0xFFFFFF);
     draw_number(score_x + 200, score_y, score, 0xFFFFFF);
 }
-
+/**
+ * @brief Starts or restarts the game: initializes state and flags.
+ */
 void game_start(void) {
 
     init_game();
@@ -177,15 +196,22 @@ void game_start(void) {
     score_updated = true;
     game_running = true;
 }
-
+/**
+ * @brief Exits the current game and returns control to the menu.
+ */
 void game_exit(void) {
     game_running = false;
 }
-
+/**
+ * @brief Returns whether the game is still running.
+ * @return true if the game loop should continue, false otherwise.
+ */
 bool game_is_running(void) {
     return game_running;
 }
-
+/**
+ * @brief Draws the game over screen.
+ */
 void draw_game_over(void) {
     vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, 0x000000); 
 
@@ -203,13 +229,17 @@ void draw_game_over(void) {
 
     menu_set_active(true);
 }
-
+/**
+ * @brief Draws only the static part of the score (label) before dynamic updates.
+ */
 void draw_score_static(void) {
     int score_x = game_start_x + (curr_game_area_width / 2) - 50; 
     int score_y = game_start_y - BORDER_WIDTH - 30;
     draw_text(score_x, score_y, "SCORE", 0xFFFFFF);
 }
-
+/**
+ * @brief Draws only the numeric score dynamically during gameplay.
+ */
 void draw_score_dynamic(void) {
     int score_x = game_start_x + (curr_game_area_width/ 2) - 50; 
     int score_y = game_start_y - BORDER_WIDTH - 30;
@@ -228,7 +258,9 @@ void draw_score_dynamic(void) {
     vg_draw_rectangle(score_x + 80, score_y, clear_width, 20,0x333333);
     draw_number(score_x + 80, score_y, score, 0xFFFFFF);
 }
-
+/**
+ * @brief Draws the static elements of the playfield (background, borders, title).
+ */
 void draw_game_static(void) {
     vg_draw_rectangle(0, 0, mode_info.XResolution, mode_info.YResolution, 0x333333); 
     vg_draw_rectangle(game_start_x - BORDER_WIDTH, game_start_y - BORDER_WIDTH,  
@@ -248,7 +280,9 @@ void draw_game_static(void) {
     
     draw_score_static();
 }
-
+/**
+ * @brief Draws the dynamic elements of the playfield (food, snake segments).
+ */
 void draw_game_dynamic(void) {
     vg_draw_rectangle(game_start_x, game_start_y, curr_game_area_width, curr_game_area_height, 0xdddddd);
     if (score_updated) {

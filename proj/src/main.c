@@ -1,3 +1,11 @@
+
+/**
+ * @file main.c
+ * @brief Entry point and main loop for the Snake Game project.
+ *
+ * Initializes graphics mode, input handlers, menu and high‐score system,
+ * then enters the main event loop handling keyboard and timer interrupts.
+ */
 #include <lcom/lcf.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -12,6 +20,15 @@ static uint8_t timer_mask;
 extern uint8_t scancode;
 extern int update_tick_threshold;
 
+/**
+ * @brief Program entry point.
+ *
+ * Configures LCF, parses arguments and hands control to proj_main_loop().
+ *
+ * @param argc Number of command-line arguments.
+ * @param argv Array of command-line argument strings.
+ * @return 0 on success, non-zero on failure.
+ */
 
 int main(int argc, char *argv[]) {
   // sets the language of LCF messages (can be either EN-US or PT-PT)
@@ -32,7 +49,16 @@ int main(int argc, char *argv[]) {
   lcf_cleanup();
   return 0;
 }
-
+/**
+ * @brief Main loop once graphics mode is set.
+ *
+ * Initializes VBE mode, VRAM mapping, menu, timer and keyboard subscriptions,
+ * then enters the event loop which alternates between menu and game logic.
+ *
+ * @param argc Ignored.
+ * @param argv Ignored.
+ * @return 0 on clean exit, 1 on error.
+ */
 int (proj_main_loop)(int argc, char *argv[]) {
     uint16_t mode = 0x117;  
     if(vbe_get_mode_info(mode, &mode_info) != OK) return 1;
